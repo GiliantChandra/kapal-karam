@@ -7,13 +7,10 @@ public class Frame extends JPanel{
     private int rows = 24;
     private int columns = 32;
     private int width;
-    private int height;
+    private int height; 
     JFrame frame = new JFrame("Ya main last war lah !!");
 
     
-
-
-
     Frame(){
         width = columns * tileSize;
         height = rows * tileSize;
