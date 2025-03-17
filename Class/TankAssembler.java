@@ -27,7 +27,7 @@ public class TankAssembler extends JPanel {
 
             // Draw body and turret
             g.drawImage(base, x, y, null); 
-            g.drawImage(turret, x + 115 , y + 140, null);  // Adjust position if needed
+            g.drawImage(turret, x + 115 , y + 30, null);  // Adjust position if needed
         }
     }
     
