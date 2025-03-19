@@ -89,17 +89,4 @@ public class TankAssembler extends JPanel {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Tank Assembly");
-        TankAssembler panel = new TankAssembler();
-
-        frame.add(panel);
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-        // Save the image after a short delay
-        new Timer(1000, e -> panel.saveImage()).start();
-    }
 }

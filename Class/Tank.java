@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-class Player {
+class Tank {
     private int x, y;
     private int cannonLevel = 0;
     private int hullLevel = 0;
@@ -33,13 +33,13 @@ class Player {
 
     public void draw(Graphics g) {
         // Draw hull
-        g.drawImage(TankAssembler.base.get(hullLevel), x, y, null);
+        g.drawImage(assetsLoader.hulls.get(hullLevel), x, y, null);
         // Draw tracks
-        g.drawImage(TankAssembler.tracks.get(tracksLevel), x, y + 20, null);
+        g.drawImage(assetsLoader.tracks.get(tracksLevel), x, y + 20, null);
         // Draw cannon
-        g.drawImage(TankAssembler.turret.get(cannonLevel), x + 10, y - 10, null);
+        g.drawImage(assetsLoader.cannons.get(cannonLevel), x + 10, y - 10, null);
         // Draw fire effect
-        g.drawImage(TankAssembler.fireEffects.get(fireLevel), x + 15, y + 30, null);
+        g.drawImage(assetsLoader.fireEffects.get(fireLevel), x + 15, y + 30, null);
     }
 
     public void drawProjectiles(Graphics g) {
@@ -60,18 +60,18 @@ class Player {
     public int getY() { return y; }
 
     public void upgradeCannon() {
-        if (cannonLevel < AssetLoader.cannons.size() - 1) cannonLevel++;
+        if (cannonLevel < assetsLoader.cannons.size() - 1) cannonLevel++;
     }
 
     public void upgradeHull() {
-        if (hullLevel < AssetLoader.hulls.size() - 1) hullLevel++;
+        if (hullLevel < assetsLoader.hulls.size() - 1) hullLevel++;
     }
 
     public void upgradeTracks() {
-        if (tracksLevel < AssetLoader.tracks.size() - 1) tracksLevel++;
+        if (tracksLevel < assetsLoader.tracks.size() - 1) tracksLevel++;
     }
 
     public void upgradeFire() {
-        if (fireLevel < AssetLoader.fireEffects.size() - 1) fireLevel++;
+        if (fireLevel < assetsLoader.fireEffects.size() - 1) fireLevel++;
     }
 }
