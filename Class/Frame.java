@@ -1,24 +1,27 @@
-import java.awt.Color;
-import java.awt.Image;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-public class Frame extends JPanel{
+public class Frame extends JPanel implements ActionListener {
     private int tileSize = 32;
     private int rows = 24;
-    private int columns = 32;
+    private int columns = 16;
     private int width;
     private int height; 
+    Timer gameLoop;
     JFrame frame = new JFrame("Ya main last war lah !!");
 
-    Image tankImage;
-    Image enemyImage;
-    Image projectileImage;
+    TankAssembler tanks = new TankAssembler();
 
-    
-    Frame(){
+    Frame() {
         width = columns * tileSize;
         height = rows * tileSize;
+
+        int playerX = tileSize * columns / 2 - 32; 
+        int playerY = height - 110; 
 
         frame.setSize(width , height);
         frame.setLocationRelativeTo(null);
@@ -26,13 +29,37 @@ public class Frame extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setBackground(Color.BLACK);
+        setLayout(null); 
 
-        tankImage = new ImageIcon(getClass().getResource("assets/PNG/Hulls_Color_D/Hull_08.png")).getImage();
         
+        tanks.setBounds(playerX, playerY, 64, 64);
+        add(tanks);
+
         frame.add(this);
-        
-        frame.setVisible(true);    
+        setFocusable(true);
+        requestFocusInWindow(); 
+        frame.setVisible(true);
+
+        gameLoop = new Timer(1000 / 60, this);
+        gameLoop.start();
+
+        frame.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    tanks.moveLeft();
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    tanks.moveRight();
+                }
+            }
+        });
+
+        frame.setFocusable(true);
+        frame.requestFocus();
     }
 
-    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
 }

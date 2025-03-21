@@ -1,3 +1,4 @@
+// TankAssembler.java
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -5,7 +6,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class TankAssembler extends JPanel {
-    private BufferedImage base, turret , track;
+    private BufferedImage base, turret, track;
+    private int frameWidth = 512;
+    int tankX = 224;
+    int tankY = 660;
+    private int speed = 10;
 
     String[] BasePath = {"assets/PNG/Hulls_Color_D/Hull_08.png", 
                          "assets/PNG/Hulls_Color_D/Hull_07.png",
@@ -16,7 +21,6 @@ public class TankAssembler extends JPanel {
                          "assets/PNG/Hulls_Color_D/Hull_05.png",
                          "assets/PNG/Hulls_Color_D/Hull_02.png"};
 
-                         
     String[] turretPath = {"assets/PNG/Weapon_Color_D/Gun_08.png",
                            "assets/PNG/Weapon_Color_D/Gun_07.png",
                            "assets/PNG/Weapon_Color_D/Gun_06.png",
@@ -24,69 +28,59 @@ public class TankAssembler extends JPanel {
                            "assets/PNG/Weapon_Color_D/Gun_04.png",
                            "assets/PNG/Weapon_Color_D/Gun_03.png",
                            "assets/PNG/Weapon_Color_D/Gun_05.png",
-                           "assets/PNG/Weapon_Color_D/Gun_02.png" 
-                           };
-                           
-    String[] trackPath = {"/assets/PNG/Tracks/Track_1_A.png",
-                          "/assets/PNG/Tracks/Track_1_B.png",
-                          "/assets/PNG/Tracks/Track_2_A.png",
-                          "/assets/PNG/Tracks/Track_2_B.png",
-                          "/assets/PNG/Tracks/Track_3_A.png",
-                          "/assets/PNG/Tracks/Track_3_B.png",
-                          "/assets/PNG/Tracks/Track_4_A.png",
-                          "/assets/PNG/Tracks/Track_4_B.png"};
+                           "assets/PNG/Weapon_Color_D/Gun_02.png"};
+
+    String[] trackPath = {"assets/PNG/Tracks/Track_1_A.png",
+                          "assets/PNG/Tracks/Track_1_B.png",
+                          "assets/PNG/Tracks/Track_2_A.png",
+                          "assets/PNG/Tracks/Track_2_B.png",
+                          "assets/PNG/Tracks/Track_3_A.png",
+                          "assets/PNG/Tracks/Track_3_B.png",
+                          "assets/PNG/Tracks/Track_4_A.png",
+                          "assets/PNG/Tracks/Track_4_B.png"};
 
     public TankAssembler() {
+        setPreferredSize(new Dimension(64, 64));
+        setOpaque(false);
         try {
-            //ni try catch apa    gtw jirr kekny g prna di mention deh
-            //ya tpi keknya w blm ads gambaran gmn cara buat itu
-            // brti sini siapin path byk" senjata, sesuai level
-            // ganti nama variabel jadi baselvl1m baselvl2, trs buat if else (cek ada brp poin), yang nnti diassign ke base
-            //harusnya gitu
-            //ohh bs jg
             base = ImageIO.read(new File(BasePath[0]));  
-            turret = ImageIO.read(new File(turretPath[0])); // Includes the gun barrel
+            turret = ImageIO.read(new File(turretPath[1]));
             track = ImageIO.read(new File(trackPath[0]));
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("Error loading images: " + e.getMessage());
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if (base != null && turret != null) {
-            int x = (getWidth() - base.getWidth()) / 2;
-            int y = (getHeight() - base.getHeight()) / 2;
-
-            // Draw body and turret
-            g.drawImage(track,x + 55, y + 10 , null);
-            g.drawImage(track,x + 160, y + 10 , null);
-
-            g.drawImage(base, x, y, null); 
-            g.drawImage(turret, x + 115 , y + 30, null);  // Adjust position if needed
+        Graphics2D g2d = (Graphics2D) g;
+        
+        if (track != null) {
+            g2d.drawImage(track, 2, 0, 12, 64, null);
+        }
+        if (track != null) {
+            g2d.drawImage(track, 27, 0, 12, 64, null);
+        }
+        if (base != null) {
+            g2d.drawImage(base, -12, 0, 64, 64, null);
+        }
+        if (turret != null) {
+            g2d.drawImage(turret, 5, -20, 32, 64, null);
         }
     }
-    // brrti run di lu jir, tdi w pake terminal, java TankAssembler
-    
-    public void saveImage() { 
-        if (base == null || turret == null) {
-            System.out.println("Error: Some images are missing.");
-            return;
+
+    public void moveLeft() {
+        if (tankX - speed >= 0) { 
+            tankX -= speed;
+            setLocation(tankX, tankY);
         }
+    }
 
-        try {
-            BufferedImage combined = new BufferedImage(base.getWidth(), base.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics g = combined.getGraphics();
-            
-            g.drawImage(base, 0, 0, null);
-            g.drawImage(turret, 30, 15, null);
-
-            ImageIO.write(combined, "PNG", new File("final_tank.png"));
-            System.out.println("Tank image saved as final_tank.png!");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void moveRight() {
+        if (tankX + speed + 64 <= frameWidth) { 
+            tankX += speed;
+            setLocation(tankX, tankY);
         }
     }
 }
