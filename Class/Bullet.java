@@ -10,11 +10,11 @@ public class Bullet extends JPanel{
     private int bulletY;
     int bulletWidth = 20; // tilesize/8
     int bulletHeight = 30; //tilesize/2
-    int bulletVelocityY = -1; //bullet moving speed
+    int bulletVelocityY = -10; //bullet moving speed
     private int idxBullet = 0;
 
 
-    String[] BulletPath = {"assets/PNG/Effects/Heavy_Shell.png"};
+    String[] BulletPath = {"assets/PNG/Effects/Plasma.png"};
 
     
     public Bullet(int bulletX, int bulletY) {
@@ -32,7 +32,6 @@ public class Bullet extends JPanel{
     public void move () {
         bulletY += bulletVelocityY;
         setLocation(bulletX, bulletY);
-        System.out.println("Bullet moving to: " + bulletX + ", " + bulletY); // debug
         repaint();
     }
 

@@ -13,6 +13,11 @@ public class Frame extends JPanel implements ActionListener {
     private int columns = 16;
     private int width;
     private int height; 
+
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean shootPressed = false;
+    
     Timer gameLoop;
     Timer enemySpawnTimer;
     Timer enemyMoveTimer;
@@ -71,7 +76,7 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemyMoveTimer.start();
 
-        BulletTimer = new Timer(100, new ActionListener() {
+        BulletTimer = new Timer(1, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Bullet b : bullets) {
@@ -94,6 +99,9 @@ public class Frame extends JPanel implements ActionListener {
                 }
             }
         });
+
+        
+
 
         frame.setFocusable(true);
         frame.requestFocus();
@@ -122,9 +130,12 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     public void spawnBullet () {
-        Bullet newBullet = new Bullet(tanks.tankX + 10, tanks.tankY - 30);
-        bullets.add(bullet);
-        newBullet.setBounds(tanks.tankX + 10, tanks.tankY - 30, 20, 30);
+        Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
+        bullets.add(newBullet);
+        add(newBullet);
+        newBullet.setBounds(tanks.getTankX() + 10, tanks.getTankY() - 30, 20, 30);
         repaint();
     }
+
+
 }

@@ -69,6 +69,14 @@ public class TankAssembler extends JPanel {
         }
     }
 
+    public int getTankX() {
+        return tankX;
+    }
+
+    public int getTankY() {
+        return tankY;
+    }
+
     public void moveLeft() {
         if (tankX - speed >= 0) { 
             tankX -= speed;
