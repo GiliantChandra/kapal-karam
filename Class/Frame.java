@@ -14,9 +14,7 @@ public class Frame extends JPanel implements ActionListener {
     private int width;
     private int height; 
 
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-    private boolean shootPressed = false;
+    private int score = 0;
     
     Timer gameLoop;
     Timer enemySpawnTimer;
@@ -124,17 +122,42 @@ public class Frame extends JPanel implements ActionListener {
         repaint();
     }  
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        repaint();
-    }
-
     public void spawnBullet () {
         Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
         bullets.add(newBullet);
         add(newBullet);
-        newBullet.setBounds(tanks.getTankX() + 10, tanks.getTankY() - 30, 20, 30);
+        newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
         repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        checkCollisions();
+        repaint();
+    }
+
+    private void checkCollisions() {
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+            for (int j = 0; j < enemies.size(); j++) {
+                Enemy enemy = enemies.get(j);
+                if (enemy.isHit(bullet)) {
+                    bullets.remove(i);
+                    enemies.remove(j);
+                    remove(bullet);
+                    remove(enemy);
+                    score += 10;
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        g.drawString("Score: " + score, 10, 20);
     }
 
 

@@ -69,6 +69,8 @@ public class Enemy extends JPanel{
     private BufferedImage enemyImg;
     private int enemyX;
     private int enemyY;
+    private int enemyWidth = 64;
+    private int enemyHeight = 64;
     private int speed = 2;
     private int idxEnemy = (int) (Math.random() * 9);
     int RandomX, Y;
@@ -88,7 +90,7 @@ public class Enemy extends JPanel{
     public Enemy(int RandomX, int Y) {
         this.enemyX = RandomX;
         this.enemyY = Y;
-        setBounds(enemyX, enemyY, 64, 64);
+        setBounds(enemyX, enemyY, enemyWidth, enemyHeight);
         setOpaque(false);
         try {
             enemyImg = ImageIO.read(new File(enemyPath[idxEnemy]));  
@@ -109,9 +111,14 @@ public class Enemy extends JPanel{
 
     public void move() { 
         enemyY += speed;
-        setLocation(enemyX, enemyY);
-        repaint();
-        
+        setLocation(enemyX, enemyY);        
+    }
+
+    public boolean isHit(Bullet bullet) {
+        return enemyX < bullet.getBulletX() + bullet.getBulletWidth() &&
+               enemyX + enemyWidth > bullet.getBulletX() &&
+               enemyY < bullet.getBulletY() + bullet.getBulletHeight() &&
+               enemyY + enemyHeight > bullet.getBulletY();
     }
 
 

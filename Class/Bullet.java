@@ -8,13 +8,29 @@ public class Bullet extends JPanel{
     public BufferedImage bulletImg;
     private int bulletX;
     private int bulletY;
-    int bulletWidth = 20; // tilesize/8
-    int bulletHeight = 30; //tilesize/2
+    int bulletWidth = 64; // tilesize/8
+    int bulletHeight = 64; //tilesize/2
     int bulletVelocityY = -10; //bullet moving speed
     private int idxBullet = 0;
 
 
     String[] BulletPath = {"assets/PNG/Effects/Plasma.png"};
+
+    public int getBulletX() {
+        return bulletX;
+    }
+
+    public int getBulletY() {
+        return bulletY;
+    }
+
+    public int getBulletWidth() {
+        return bulletWidth;
+    }
+
+    public int getBulletHeight() {
+        return bulletHeight;
+    }
 
     
     public Bullet(int bulletX, int bulletY) {
@@ -41,7 +57,7 @@ public class Bullet extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         
         if (bulletImg != null) {
-            g2d.drawImage(bulletImg, 0, 0, bulletWidth, bulletHeight, null);
+            g2d.drawImage(bulletImg, -10, 0, bulletWidth, bulletHeight, null);
         }
     }   
 }
