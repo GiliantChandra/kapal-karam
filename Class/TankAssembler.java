@@ -39,7 +39,7 @@ public class TankAssembler extends JPanel {
                           "assets/PNG/Tracks/Track_4_B.png"};
 
     public TankAssembler() {
-        setPreferredSize(new Dimension(64, 64));
+        setPreferredSize(new Dimension(32, 64));
         setOpaque(false);
         try {
             base = ImageIO.read(new File(BasePath[0]));  
