@@ -16,10 +16,15 @@ public class Frame extends JPanel implements ActionListener {
     Timer gameLoop;
     Timer enemySpawnTimer;
     Timer enemyMoveTimer;
+    Timer BulletTimer;
     JFrame frame = new JFrame("Ya main last war lah !!");
 
     TankAssembler tanks = new TankAssembler();
     private ArrayList<Enemy> enemies = new ArrayList<>();
+
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    Bullet bullet = new Bullet(tanks.tankX, tanks.tankY);
+
 
     Frame() {
         width = columns * tileSize;
@@ -66,6 +71,17 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemyMoveTimer.start();
 
+        BulletTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Bullet b : bullets) {
+                    b.move();
+                }
+                repaint();
+            }
+        });
+        BulletTimer.start();
+
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -73,6 +89,8 @@ public class Frame extends JPanel implements ActionListener {
                     tanks.moveLeft();
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     tanks.moveRight();
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spawnBullet();
                 }
             }
         });
@@ -96,13 +114,17 @@ public class Frame extends JPanel implements ActionListener {
             enemy.move();
         }
         repaint();
-    }
-
-
-    
+    }  
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
+
+    public void spawnBullet () {
+        Bullet newBullet = new Bullet(tanks.tankX + 10, tanks.tankY - 30);
+        bullets.add(bullet);
+        newBullet.setBounds(tanks.tankX + 10, tanks.tankY - 30, 20, 30);
         repaint();
     }
 }
