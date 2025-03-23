@@ -15,6 +15,7 @@ public class Frame extends JPanel implements ActionListener {
     private int height; 
 
     private int score = 0;
+    int targetScore = 20;
     
     Timer gameLoop;
     Timer enemySpawnTimer;
@@ -124,6 +125,8 @@ public class Frame extends JPanel implements ActionListener {
 
     public void spawnBullet () {
         Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
+        System.out.println("Spawning bullet with idxBullet: " + bullet.getidxBullet());
+        newBullet.setidxBullet(upgradeBullet());
         bullets.add(newBullet);
         add(newBullet);
         newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
@@ -132,6 +135,7 @@ public class Frame extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        upgradeBullet();
         checkCollisions();
         repaint();
     }
@@ -143,15 +147,28 @@ public class Frame extends JPanel implements ActionListener {
                 Enemy enemy = enemies.get(j);
                 if (enemy.isHit(bullet)) {
                     bullets.remove(i);
-                    enemies.remove(j);
+                    enemy.setEnemyHealth(bullet.damage[bullet.getidxBullet()]);
                     remove(bullet);
-                    remove(enemy);
-                    score += 10;
+                    if(enemy.getEnemyHealth() <= 0){
+                        enemies.remove(j);
+                        remove(enemy);
+                        score += 10;
+                    }
                     break;
                 }
             }
         }
     }
+
+    
+    public int upgradeBullet(){
+        if(score > targetScore){
+            bullet.incrementIdxBullet();
+            targetScore *= 2;
+        }
+        return bullet.getidxBullet();
+    }
+    
 
     @Override
     protected void paintComponent(Graphics g) {

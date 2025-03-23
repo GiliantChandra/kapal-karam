@@ -67,6 +67,7 @@ import java.io.File;
 
 public class Enemy extends JPanel{
     private BufferedImage enemyImg;
+    private int health = 500;
     private int enemyX;
     private int enemyY;
     private int enemyWidth = 64;
@@ -74,6 +75,14 @@ public class Enemy extends JPanel{
     private int speed = 2;
     private int idxEnemy = (int) (Math.random() * 9);
     int RandomX, Y;
+
+    public int getEnemyHealth(){
+        return this.health;
+    }
+
+    public void setEnemyHealth(int subtraction){
+        this.health = this.health + subtraction;
+    }
 
     String[] enemyPath = {"assets/PNG/Meteors/Meteor_01.png",
                         "assets/PNG/Meteors/Meteor_02.png",

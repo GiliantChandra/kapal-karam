@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,8 +14,35 @@ public class Bullet extends JPanel{
     int bulletVelocityY = -10; //bullet moving speed
     private int idxBullet = 0;
 
+    
 
-    String[] BulletPath = {"assets/PNG/Effects/Plasma.png"};
+
+    String[] BulletPath = {"assets/PNG/Effects/Plasma.png", 
+                            "assets/PNG/Effects/Shotgun_Shells.png", 
+                            "assets/PNG/Effects/Laser.png", 
+                            "assets/PNG/Effects/Flash_A_05.png",
+                            "assets/PNG/Effects/Flash_A_04.png",
+                        };
+
+    int[] damage = {-50 , -150, -300 , -450 , -500};
+
+    public int getidxBullet(){
+        return this.idxBullet;
+    }
+
+    public void setidxBullet(int idx){
+        this.idxBullet = idx;
+        updateBulletImage();
+    }
+
+    public void incrementIdxBullet(){
+        if(this.idxBullet < 5){
+            this.idxBullet = this.idxBullet + 1;
+        }
+        
+    }
+
+    
 
     public int getBulletX() {
         return bulletX;
@@ -38,12 +66,17 @@ public class Bullet extends JPanel{
         this.bulletY = bulletY;
         setBounds(bulletX, bulletY, bulletWidth, bulletHeight);
         setOpaque(false);
+    }
+
+    public void updateBulletImage() {
         try {
             bulletImg = ImageIO.read(new File(BulletPath[idxBullet]));  
+            repaint(); 
         } catch (Exception e) {
-            System.out.println("Error loading images: " + e.getMessage());
+            System.out.println("Error loading bullet image: " + e.getMessage());
         }
     }
+    
 
     public void move () {
         bulletY += bulletVelocityY;
