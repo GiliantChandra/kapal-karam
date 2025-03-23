@@ -47,7 +47,7 @@ public class Frame extends JPanel implements ActionListener {
         setLayout(null); 
 
         
-        tanks.setBounds(playerX, playerY, 40, 64);
+        tanks.setBounds(playerX, playerY, 1200, 84);
         add(tanks);
 
         frame.add(this);

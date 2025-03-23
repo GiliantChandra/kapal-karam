@@ -59,10 +59,12 @@ public class TankAssembler extends JPanel {
 
     public void healthSubtractionAfterCollisionWithTank(){
         this.health -= 1000;
+        repaint();
     }
 
     public void damaged(){
         this.health -= 100;
+        repaint();
     }
 
     @Override
@@ -85,8 +87,8 @@ public class TankAssembler extends JPanel {
 
         g2d.setColor(Color.RED);
 
-        g2d.fillRoundRect(0, -10, health / 1000, 8, 10, 10);
-        repaint();
+        g2d.fillRoundRect(20, 65, health/5 , 8, 5, 5);
+        
     }
 
     public int getTankX() {
