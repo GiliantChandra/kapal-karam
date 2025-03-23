@@ -47,7 +47,7 @@ public class Frame extends JPanel implements ActionListener {
         setLayout(null); 
 
         
-        tanks.setBounds(playerX, playerY, 45, 64);
+        tanks.setBounds(playerX, playerY, 40, 64);
         add(tanks);
 
         frame.add(this);
@@ -136,6 +136,7 @@ public class Frame extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         upgradeBullet();
         checkCollisions();
+        checkCollisionsTank();
         repaint();
     }
 
@@ -148,6 +149,7 @@ public class Frame extends JPanel implements ActionListener {
                     bullets.remove(i);
                     enemy.setEnemyHealth(bullet.damage[bullet.getidxBullet()]);
                     remove(bullet);
+                    
                     if(enemy.getEnemyHealth() <= 0){
                         enemies.remove(j);
                         remove(enemy);
@@ -157,7 +159,29 @@ public class Frame extends JPanel implements ActionListener {
                 }
             }
         }
+
     }
+
+    private void checkCollisionsTank(){
+        for (int i = 0; i<enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
+            if (tanks.isHit(enemy)){
+                // game over
+                tanks.healthSubtractionAfterCollisionWithTank(); 
+                remove(enemy);
+                enemies.remove(enemy);
+                repaint();
+            } 
+            else if(enemy.getEnemyY() > 768){
+                tanks.damaged();
+                remove(enemy);
+                enemies.remove(enemy);
+                repaint();
+            }  
+        }
+    }
+
+    
 
     
     public int upgradeBullet(){
@@ -174,7 +198,10 @@ public class Frame extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, 10, 20);
+        
+        g.drawString("HP: "  + tanks.getTankHealth(), 10, 40);
     }
 
+    // validasi game over.
 
 }

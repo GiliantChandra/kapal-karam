@@ -25,6 +25,22 @@ public class Enemy extends JPanel{
         this.health = this.health + subtraction;
     }
 
+    public int getEnemyX(){
+        return this.enemyX;
+    }
+
+    public int getEnemyY(){
+        return this.enemyY;
+    }
+
+    public int getEnemyHeight(){
+        return this.enemyHeight;
+    }
+
+    public int getEnemyWidth(){
+        return this.enemyWidth;
+    }
+
     String[] enemyPath = {"assets/PNG/Meteors/Meteor_01.png",
                         "assets/PNG/Meteors/Meteor_02.png",
                         "assets/PNG/Meteors/Meteor_03.png",
@@ -63,7 +79,7 @@ public class Enemy extends JPanel{
         }
     }
 
-    public void move() { 
+    public void move() {
         enemyY += speed;
         setLocation(enemyX, enemyY);        
     }

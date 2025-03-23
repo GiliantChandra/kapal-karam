@@ -10,6 +10,8 @@ public class TankAssembler extends JPanel {
     private int frameWidth = 512;
     int tankX = 224;
     int tankY = 660;
+    int tankWidth = 40;
+    int tankHeight = 64;
     private int speed = 10;
 
     String[] BasePath = {"assets/PNG/Hulls_Color_D/Hull_08.png", 
@@ -40,7 +42,7 @@ public class TankAssembler extends JPanel {
                           "assets/PNG/Tracks/Track_4_B.png"};
 
     public TankAssembler() {
-        setPreferredSize(new Dimension(32, 64));
+        setPreferredSize(new Dimension(tankWidth, tankHeight));
         setOpaque(false);
         try {
             base = ImageIO.read(new File(BasePath[0]));  
@@ -49,6 +51,18 @@ public class TankAssembler extends JPanel {
         } catch (Exception e) {
             System.out.println("Error loading images: " + e.getMessage());
         }
+    }
+
+    public int getTankHealth(){
+        return this.health;
+    }
+
+    public void healthSubtractionAfterCollisionWithTank(){
+        this.health -= 1000;
+    }
+
+    public void damaged(){
+        this.health -= 100;
     }
 
     @Override
@@ -68,6 +82,11 @@ public class TankAssembler extends JPanel {
         if (turret != null) {
             g2d.drawImage(turret, 5, -20, 32, 64, null);
         }
+
+        g2d.setColor(Color.RED);
+
+        g2d.fillRoundRect(0, -10, health / 1000, 8, 10, 10);
+        repaint();
     }
 
     public int getTankX() {
@@ -91,4 +110,12 @@ public class TankAssembler extends JPanel {
             setLocation(tankX, tankY);
         }
     }
+
+    public boolean isHit(Enemy enemy) {
+        return tankX < enemy.getEnemyX() + enemy.getEnemyWidth() &&
+           tankX + tankWidth > enemy.getEnemyX() &&
+           tankY < enemy.getEnemyY() + enemy.getEnemyHeight() &&
+           tankY + tankHeight > enemy.getEnemyY();
+    }
+
 }
