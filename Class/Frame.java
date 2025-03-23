@@ -47,7 +47,7 @@ public class Frame extends JPanel implements ActionListener {
         setLayout(null); 
 
         
-        tanks.setBounds(playerX, playerY, 40, 64);
+        tanks.setBounds(playerX, playerY, 45, 64);
         add(tanks);
 
         frame.add(this);
@@ -125,7 +125,6 @@ public class Frame extends JPanel implements ActionListener {
 
     public void spawnBullet () {
         Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
-        System.out.println("Spawning bullet with idxBullet: " + bullet.getidxBullet());
         newBullet.setidxBullet(upgradeBullet());
         bullets.add(newBullet);
         add(newBullet);

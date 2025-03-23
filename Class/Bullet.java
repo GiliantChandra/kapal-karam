@@ -18,13 +18,17 @@ public class Bullet extends JPanel{
 
 
     String[] BulletPath = {"assets/PNG/Effects/Plasma.png", 
-                            "assets/PNG/Effects/Shotgun_Shells.png", 
                             "assets/PNG/Effects/Laser.png", 
+                            "assets/PNG/Effects/Shotgun_Shells.png",
+                            "assets/PNG/Props/Explosion_02.png",
+                            "assets/PNG/Props/Rocket_Effect_01.png",
+                            "assets/PNG/Props/Explosion_01.png",
+                            "assets/PNG/Props/Missile_03.png",
                             "assets/PNG/Effects/Flash_A_05.png",
                             "assets/PNG/Effects/Flash_A_04.png",
                         };
 
-    int[] damage = {-50 , -150, -300 , -450 , -500};
+    int[] damage = {-50 , -150, -300 , -450 , -500, -1000 , -2000, -2500, -3000};
 
     public int getidxBullet(){
         return this.idxBullet;
@@ -36,7 +40,7 @@ public class Bullet extends JPanel{
     }
 
     public void incrementIdxBullet(){
-        if(this.idxBullet < 5){
+        if(this.idxBullet < 8){
             this.idxBullet = this.idxBullet + 1;
         }
         
@@ -90,7 +94,7 @@ public class Bullet extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         
         if (bulletImg != null) {
-            g2d.drawImage(bulletImg, -10, 0, bulletWidth, bulletHeight, null);
+            g2d.drawImage(bulletImg, -10, 0, bulletWidth , bulletHeight, null);
         }
     }   
 }

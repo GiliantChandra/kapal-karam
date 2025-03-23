@@ -5,6 +5,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class TankAssembler extends JPanel {
+    private int health = 1000;
     private BufferedImage base, turret, track;
     private int frameWidth = 512;
     int tankX = 224;
