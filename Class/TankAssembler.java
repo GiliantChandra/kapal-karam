@@ -102,14 +102,14 @@ public class TankAssembler extends JPanel {
     public void moveLeft() {
         if (tankX - speed >= 0) { 
             tankX -= speed;
-            setLocation(tankX, tankY);
+            setLocation(tankX, tankY - 10);
         }
     }
 
     public void moveRight() {
         if (tankX + speed + 64 <= frameWidth) { 
             tankX += speed;
-            setLocation(tankX, tankY);
+            setLocation(tankX, tankY - 10);
         }
     }
 
