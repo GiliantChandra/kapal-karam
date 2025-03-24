@@ -6,15 +6,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class Bullet extends JPanel{
-    public BufferedImage bulletImg;
-    private int bulletX;
-    private int bulletY;
-    int bulletWidth = 64; // tilesize/8
-    int bulletHeight = 64; //tilesize/2
+    public BufferedImage bulletImg; 
+    private int bulletX; 
+    private int bulletY; 
+    int bulletWidth = 64; // tilesize/8 
+    int bulletHeight = 64; //tilesize/2 
     int bulletVelocityY = -10; //bullet moving speed
-    private int idxBullet = 0;
-
-    
+    private int idxBullet = 0;    
 
 
     String[] BulletPath = {"assets/PNG/Effects/Plasma.png", 

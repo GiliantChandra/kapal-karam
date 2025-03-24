@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import Enemy.EnemyAbs;
+
 public class Frame extends JPanel implements ActionListener {
     private int tileSize = 32;
     private int rows = 24;
@@ -24,7 +26,7 @@ public class Frame extends JPanel implements ActionListener {
     JFrame frame = new JFrame("Ya main last war lah !!");
 
     TankAssembler tanks = new TankAssembler();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<EnemyAbs> enemies = new ArrayList<>();
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     Bullet bullet = new Bullet(tanks.tankX, tanks.tankY);
@@ -109,7 +111,7 @@ public class Frame extends JPanel implements ActionListener {
 
     private void spawnEnemy() {
         int randomX = (int) (Math.random() * 512); 
-        Enemy enemy = new Enemy(randomX, 0); 
+        EnemyAbs enemy = new EnemyAbs(randomX, 0); 
         enemies.add(enemy);
         add(enemy);
         enemy.setBounds(randomX, 0, 64, 64);
@@ -117,7 +119,7 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     private void move() {
-        for (Enemy enemy : enemies) {
+        for (EnemyAbs enemy : enemies) {
             enemy.move();
         }
         repaint();
@@ -144,7 +146,7 @@ public class Frame extends JPanel implements ActionListener {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             for (int j = 0; j < enemies.size(); j++) {
-                Enemy enemy = enemies.get(j);
+                EnemyAbs enemy = enemies.get(j);
                 if (enemy.isHit(bullet)) {
                     bullets.remove(i);
                     enemy.setEnemyHealth(bullet.damage[bullet.getidxBullet()]);
@@ -164,7 +166,7 @@ public class Frame extends JPanel implements ActionListener {
 
     private void checkCollisionsTank(){
         for (int i = 0; i<enemies.size(); i++) {
-            Enemy enemy = enemies.get(i);
+            EnemyAbs enemy = enemies.get(i);
             if (tanks.isHit(enemy)){
                 // game over
                 tanks.healthSubtractionAfterCollisionWithTank(); 

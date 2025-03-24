@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import Enemy.EnemyAbs;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -113,7 +116,7 @@ public class TankAssembler extends JPanel {
         }
     }
 
-    public boolean isHit(Enemy enemy) {
+    public boolean isHit(EnemyAbs enemy) {
         return tankX < enemy.getEnemyX() + enemy.getEnemyWidth() &&
            tankX + tankWidth > enemy.getEnemyX() &&
            tankY < enemy.getEnemyY() + enemy.getEnemyHeight() &&
