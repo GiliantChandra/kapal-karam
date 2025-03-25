@@ -17,6 +17,24 @@ public class Enemy extends JPanel{
     private int idxEnemy = (int) (Math.random() * 6);
     EnemyAbs enemy;
 
+    public int getEnemyX(){
+        return this.x;
+    }
+
+    public int getEnemyY(){
+        return this.y;
+    }
+
+    public int getEnemyWidth(){
+        return enemy.enemyWidth;
+    }
+
+    public int getEnemyHeight(){
+        return enemy.enemyHeight;
+    }
+
+
+
     public Enemy(int RandomX, int y) {
 
         EnemyAbs[] enemyArray = new EnemyAbs[] {

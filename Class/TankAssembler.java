@@ -116,7 +116,7 @@ public class TankAssembler extends JPanel {
         }
     }
 
-    public boolean isHit(EnemyAbs enemy) {
+    public boolean isHit(Enemy enemy) {
         return tankX < enemy.getEnemyX() + enemy.getEnemyWidth() &&
            tankX + tankWidth > enemy.getEnemyX() &&
            tankY < enemy.getEnemyY() + enemy.getEnemyHeight() &&
