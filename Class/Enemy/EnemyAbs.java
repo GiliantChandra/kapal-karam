@@ -1,4 +1,5 @@
 package Enemy;
+
 public abstract class EnemyAbs {
     protected int health;
     protected int enemyWidth;

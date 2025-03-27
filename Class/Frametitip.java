@@ -4,15 +4,15 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
-import javax.swing.*;
+import java.util.Iterator;
 import java.util.Random;
 
-import Bullet.Bullet;
-import Enemy.Enemy;
-import Enemy.EnemyAbs;
-import Enemy.EnemyFactory;
+import javax.swing.*;
 
+import Bullet.BulletAbs;  // Ganti Bullet ke BulletAbs (Abstract Class)
+import Bullet.Laser;       // Contoh peluru
+import Enemy.Enemy;
+import Enemy.EnemyFactory;
 
 public class Frame extends JPanel implements ActionListener {
     private int tileSize = 32;
@@ -22,7 +22,7 @@ public class Frame extends JPanel implements ActionListener {
     private int height; 
 
     private int score = 0;
-    int targetScore = 20;
+    private int targetScore = 20;
     
     Timer gameLoop;
     Timer enemySpawnTimer;
@@ -32,10 +32,9 @@ public class Frame extends JPanel implements ActionListener {
 
     TankAssembler tanks = new TankAssembler();
     private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<BulletAbs> bullets = new ArrayList<>();
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
-    Bullet bullet = new Bullet(tanks.tankX, tanks.tankY);
-
+    private Random random = new Random(); // 🔴 Tambahkan Random untuk posisi spawn musuh
 
     Frame() {
         width = columns * tileSize;
@@ -44,8 +43,7 @@ public class Frame extends JPanel implements ActionListener {
         int playerX = tileSize * columns / 2 - 32; 
         int playerY = height - 110; 
 
-
-        frame.setSize(width , height);
+        frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +51,6 @@ public class Frame extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         setLayout(null); 
 
-        
         tanks.setBounds(playerX, playerY - 8, 1200, 84);
         add(tanks);
 
@@ -65,32 +62,13 @@ public class Frame extends JPanel implements ActionListener {
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
 
-        enemySpawnTimer = new Timer(500, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                spawnEnemy();
-            }
-        });
+        enemySpawnTimer = new Timer(500, e -> spawnEnemy());
         enemySpawnTimer.start();
 
-
-        enemyMoveTimer = new Timer(60, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                move();
-            }
-        });
+        enemyMoveTimer = new Timer(60, e -> moveEnemies());
         enemyMoveTimer.start();
 
-        BulletTimer = new Timer(1, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (Bullet b : bullets) {
-                    b.move();
-                }
-                repaint();
-            }
-        });
+        BulletTimer = new Timer(10, e -> moveBullets());
         BulletTimer.start();
 
         frame.addKeyListener(new KeyAdapter() {
@@ -106,33 +84,44 @@ public class Frame extends JPanel implements ActionListener {
             }
         });
 
-        
-
-
         frame.setFocusable(true);
         frame.requestFocus();
     }
 
-
     private void spawnEnemy() {
-        int randomX = random.nextInt(width-64);
+        int randomX = random.nextInt(width - 64); // 🔴 Posisi spawn musuh di area layar
         Enemy newEnemy = EnemyFactory.createEnemy();
-        enemies.add(enemy);
-        add(enemy);
-        enemy.setBounds(randomX, 0, 64, 64);
+        newEnemy.setBounds(randomX, 0, 64, 64);
+        enemies.add(newEnemy);
+        add(newEnemy);
         repaint();
     }
 
-    private void move() {
+    private void moveEnemies() {
         for (Enemy enemy : enemies) {
             enemy.move();
         }
         repaint();
-    }  
+            
+    }
+        
 
-    public void spawnBullet () {
-        Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
-        newBullet.setidxBullet(upgradeBullet());
+    private void moveBullets() {
+        Iterator<BulletAbs> bulletIter = bullets.iterator();
+        while (bulletIter.hasNext()) {
+            BulletAbs bullet = bulletIter.next();
+            bullet.move();
+
+            if (bullet.getBulletY() < 0) {
+                remove(bullet);
+                bulletIter.remove();
+            }
+        }
+        repaint();
+    }
+
+    public void spawnBullet() {
+        BulletAbs newBullet = new Laser(tanks.getTankX(), tanks.getTankY() - 22); // 🔴 Gunakan subclass BulletAbs
         bullets.add(newBullet);
         add(newBullet);
         newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
@@ -148,67 +137,57 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     private void checkCollisions() {
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = bullets.get(i);
-            for (int j = 0; j < enemies.size(); j++) {
-                Enemy enemy = enemies.get(j);
+        Iterator<BulletAbs> bulletIter = bullets.iterator();
+        while (bulletIter.hasNext()) {
+            BulletAbs bullet = bulletIter.next();
+
+            Iterator<Enemy> enemyIter = enemies.iterator();
+            while (enemyIter.hasNext()) {
+                Enemy enemy = enemyIter.next();
+                
                 if (enemy.isHit(bullet)) {
-                    bullets.remove(i);
-                    enemy.setEnemyHealth(bullet.damage[bullet.getidxBullet()]);
                     remove(bullet);
-                    
-                    if(enemy.getEnemyHealth() <= 0){
-                        enemies.remove(j);
-                        remove(enemy);
-                        score += 10;
-                    }
+                    bulletIter.remove();
+
+                    remove(enemy);
+                    enemyIter.remove();
+
+                    score += 10;
                     break;
                 }
             }
         }
-
     }
 
-    private void checkCollisionsTank(){
-        for (int i = 0; i<enemies.size(); i++) {
-            Enemy enemy = enemies.get(i);
-            if (tanks.isHit(enemy)){
-                // game over
-                tanks.healthSubtractionAfterCollisionWithTank(); 
+    private void checkCollisionsTank() {
+        Iterator<Enemy> enemyIter = enemies.iterator();
+        while (enemyIter.hasNext()) {
+            Enemy enemy = enemyIter.next();
+
+            if (tanks.isHit(enemy)) {
+                tanks.healthSubtractionAfterCollisionWithTank();
                 remove(enemy);
-                enemies.remove(enemy);
-                repaint();
-            } 
-            else if(enemy.getEnemyY() > 768){
+                enemyIter.remove();
+            } else if (enemy.getEnemyY() > height) {
                 tanks.damaged();
                 remove(enemy);
-                enemies.remove(enemy);
-                repaint();
-            }  
+                enemyIter.remove();
+            }
         }
     }
 
-    
-
-    
-    public int upgradeBullet(){
-        if(score > targetScore){
-            bullet.incrementIdxBullet();
+    public int upgradeBullet() {
+        if (score > targetScore) {
             targetScore *= 2;
         }
-        return bullet.getidxBullet();
+        return 0;
     }
-    
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, 10, 20);
-        
-        g.drawString("HP: "  + tanks.getTankHealth(), 10, 40);
+        g.drawString("HP: " + tanks.getTankHealth(), 10, 40);
     }
-
-    // validasi game over.
-
 }
