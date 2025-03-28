@@ -16,7 +16,7 @@ public class Bullet extends JPanel{
     private int idxBullet = 0;    
 
 
-    BulletAbs BulletType[] = {
+    BulletType BulletType[] = {
                             new FlashA4() ,
                             new FlashA5(),
                             new fullBeam(),
@@ -64,6 +64,10 @@ public class Bullet extends JPanel{
         return bulletHeight;
     }
 
+    public int getBulletDamage(){
+        return BulletType[idxBullet].getDamage();
+    }
+
     
     public Bullet(int bulletX, int bulletY) {
         this.bulletX = bulletX;
@@ -74,7 +78,7 @@ public class Bullet extends JPanel{
 
     public void updateBulletImage() {
         try {
-            bulletImg = ImageIO.read(new File(BulletType[idxBullet].getImagePath));  
+            bulletImg = ImageIO.read(new File(BulletType[idxBullet].getImagePath()));  
             repaint(); 
         } catch (Exception e) {
             System.out.println("Error loading bullet image: " + e.getMessage());
@@ -83,7 +87,7 @@ public class Bullet extends JPanel{
     
 
     public void move () {
-        bulletY += BulletType[idxBullet].getspeed();
+        bulletY += BulletType[idxBullet].getSpeed();
         setLocation(bulletX, bulletY);
         repaint();
     }

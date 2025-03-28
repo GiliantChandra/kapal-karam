@@ -10,11 +10,13 @@ public class Enemy extends JPanel {
     private BufferedImage enemyImg;
     protected int x, y;
     protected EnemyAbs enemyType;
+    int health;
 
     public Enemy(int x, int y, EnemyAbs enemyType) {
         this.x = x;
         this.y = y;
         this.enemyType = enemyType;
+        health = enemyType.getEnemyHealth();
 
         setBounds(x, y, enemyType.getEnemyWidth(), enemyType.getEnemyHeight());
         setOpaque(false);
@@ -49,8 +51,13 @@ public class Enemy extends JPanel {
                y + enemyType.getEnemyHeight() > bullet.getBulletY();
     }
 
+    public void setEnemyHealth(int Damage){
+        health -= Damage; 
+    }
+
     public int getEnemyX() { return x; }
     public int getEnemyY() { return y; }
     public int getEnemyWidth() { return enemyType.getEnemyWidth(); }
     public int getEnemyHeight() { return enemyType.getEnemyHeight(); }
+    public int getEnemyHealth() { return enemyType.getEnemyHealth();}
 }

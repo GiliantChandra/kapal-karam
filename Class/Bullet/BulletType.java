@@ -1,3 +1,4 @@
+package Bullet;
 public abstract class BulletType {
     protected String imagePath;
     protected int damage;

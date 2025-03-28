@@ -19,7 +19,8 @@ public class Frame extends JPanel implements ActionListener {
     private int rows = 24;
     private int columns = 16;
     private int width;
-    private int height; 
+    private int height;
+    Random random = new Random();
 
     private int score = 0;
     int targetScore = 20;
@@ -154,7 +155,7 @@ public class Frame extends JPanel implements ActionListener {
                 Enemy enemy = enemies.get(j);
                 if (enemy.isHit(bullet)) {
                     bullets.remove(i);
-                    enemy.setEnemyHealth(bullet.damage[bullet.getidxBullet()]);
+                    enemy.setEnemyHealth(bullet.getBulletDamage());
                     remove(bullet);
                     
                     if(enemy.getEnemyHealth() <= 0){

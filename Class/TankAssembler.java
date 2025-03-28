@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 import Enemy.EnemyAbs;
+import Enemy.Enemy;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,8 +12,8 @@ public class TankAssembler extends JPanel {
     private int health = 1000;
     private BufferedImage base, turret, track;
     private int frameWidth = 512;
-    private int tankX = 224;
-    private int tankY = 660;
+    int tankX = 224;
+    int tankY = 660;
     private int tankWidth = 40;
     private int tankHeight = 64;
     private int speed = 10;
