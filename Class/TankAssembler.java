@@ -45,6 +45,7 @@ public class TankAssembler extends JPanel {
                           "assets/PNG/Tracks/Track_4_A.png",
                           "assets/PNG/Tracks/Track_4_B.png"};
 
+
     public TankAssembler() {
         setPreferredSize(new Dimension(tankWidth, tankHeight));
         setOpaque(false);
