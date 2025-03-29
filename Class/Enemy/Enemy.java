@@ -33,13 +33,24 @@ public class Enemy extends JPanel {
         setLocation(x, y);
     }
 
+    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
         if (enemyImg != null) {
+            int maxHealthBarWidth = 50;
+
+       
+            int healthBarWidth = (int) ((double) health / enemyType.getEnemyHealth() * maxHealthBarWidth);
+
+
             g2d.drawImage(enemyImg, 0, 0, enemyType.getEnemyWidth(), enemyType.getEnemyHeight(), null);
+            g2d.setColor(Color.RED);
+
+            g2d.fillRoundRect(0, 0, healthBarWidth, 8, 20, 20);
         }
     }
 
@@ -59,5 +70,5 @@ public class Enemy extends JPanel {
     public int getEnemyY() { return y; }
     public int getEnemyWidth() { return enemyType.getEnemyWidth(); }
     public int getEnemyHeight() { return enemyType.getEnemyHeight(); }
-    public int getEnemyHealth() { return enemyType.getEnemyHealth();}
+    public int getEnemyHealth() { return health;}
 }

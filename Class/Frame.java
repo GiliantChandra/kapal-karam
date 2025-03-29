@@ -83,7 +83,7 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemyMoveTimer.start();
 
-        BulletTimer = new Timer(1, new ActionListener() {
+        BulletTimer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Bullet b : bullets) {
@@ -120,7 +120,7 @@ public class Frame extends JPanel implements ActionListener {
         Enemy newEnemy = EnemyFactory.createEnemy();
         enemies.add(newEnemy);
         add(newEnemy);
-        newEnemy.setBounds(randomX, 0, 64, 64);
+        newEnemy.setBounds(randomX, 0, 200, 200);
         repaint();
     }
 
@@ -137,6 +137,7 @@ public class Frame extends JPanel implements ActionListener {
         bullets.add(newBullet);
         add(newBullet);
         newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
+        
         repaint();
     }
 

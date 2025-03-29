@@ -87,7 +87,7 @@ public class Bullet extends JPanel{
     
 
     public void move () {
-        bulletY += BulletType[idxBullet].getSpeed();
+        bulletY -= BulletType[idxBullet].getSpeed();
         setLocation(bulletX, bulletY);
         repaint();
     }
