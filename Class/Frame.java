@@ -117,10 +117,11 @@ public class Frame extends JPanel implements ActionListener {
 
     private void spawnEnemy() {
         int randomX = random.nextInt(width-64);
+        int randomY = (random.nextInt(50)) - 300; 
         Enemy newEnemy = EnemyFactory.createEnemy();
         enemies.add(newEnemy);
         add(newEnemy);
-        newEnemy.setBounds(randomX, 0, 200, 200);
+        newEnemy.setBounds(randomX, randomY, 200, 200);
         repaint();
     }
 
