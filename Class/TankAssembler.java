@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-import Enemy.EnemyAbs;
+//import Enemy.EnemyAbs;
 import Enemy.Enemy;
 
 import java.awt.*;

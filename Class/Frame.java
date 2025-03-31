@@ -10,7 +10,7 @@ import java.util.Random;
 
 import Bullet.Bullet;
 import Enemy.Enemy;
-import Enemy.EnemyAbs;
+//import Enemy.EnemyAbs;
 import Enemy.EnemyFactory;
 
 
