@@ -29,6 +29,8 @@ public class Frame extends JPanel implements ActionListener {
     Timer enemySpawnTimer;
     Timer enemyMoveTimer;
     Timer BulletTimer;
+    Timer BlockTimer;
+    Timer blockSpawnTimer;
     JFrame frame = new JFrame("Ya main last war lah !!");
 
     TankAssembler tanks = new TankAssembler();
@@ -36,6 +38,10 @@ public class Frame extends JPanel implements ActionListener {
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     Bullet bullet = new Bullet(tanks.tankX, tanks.tankY);
+
+    BlockMath blockmath = new BlockMath(0, 0);
+    private ArrayList<BlockMath> blockMath = new ArrayList<>();
+
 
 
     Frame() {
@@ -94,6 +100,27 @@ public class Frame extends JPanel implements ActionListener {
         });
         BulletTimer.start();
 
+        BlockTimer = new Timer(50, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                for(BlockMath block : blockMath){
+                    block.move();
+                }
+                repaint();
+            }
+        });
+        BlockTimer.start();
+
+        blockSpawnTimer = new Timer(2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                spawnBlock();
+            }
+        });
+        blockSpawnTimer.start();
+
+
+
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -142,6 +169,19 @@ public class Frame extends JPanel implements ActionListener {
         repaint();
     }
 
+    public void spawnBlock(){
+        BlockMath newBlockMathLeft = new BlockMath(0, 0);
+        blockMath.add(newBlockMathLeft);
+        BlockMath newBlockMathRight = new BlockMath(256, 0);
+        blockMath.add(newBlockMathRight);
+        add(newBlockMathLeft);
+        add(newBlockMathRight);
+        newBlockMathLeft.setBounds(0, 0 , 250, 100);
+        newBlockMathRight.setBounds(0, 0 , 256, 100);
+
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         upgradeBullet();
@@ -167,6 +207,16 @@ public class Frame extends JPanel implements ActionListener {
                     }
                     break;
                 }
+            }
+        }
+
+        for (int i = 0; i < blockMath.size(); i++) {
+            BlockMath block = blockMath.get(i);
+            if (block.isHit(tanks)) {  
+                score += block.getValue();  
+                remove(block);
+                blockMath.remove(i);
+                repaint();
             }
         }
 

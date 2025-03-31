@@ -62,6 +62,14 @@ public class TankAssembler extends JPanel {
         return this.health;
     }
 
+    public int getTankWidth(){
+        return this.tankWidth;
+    }
+
+    public int getTankHeight(){
+        return this.tankHeight;
+    }
+
     public void healthSubtractionAfterCollisionWithTank(){
         this.health -= 1000;
         repaint();
