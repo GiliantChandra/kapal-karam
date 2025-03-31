@@ -213,7 +213,17 @@ public class Frame extends JPanel implements ActionListener {
         for (int i = 0; i < blockMath.size(); i++) {
             BlockMath block = blockMath.get(i);
             if (block.isHit(tanks)) {  
-                score += block.getValue();  
+                switch(block.opr0){
+                    case "+":
+                        score += block.getValue(); 
+                        break;
+                    case "-":
+                        score -= block.getValue();  
+                        if(score <= 0){
+                            score = 0;
+                        }
+                        break;
+                }
                 remove(block);
                 blockMath.remove(i);
                 repaint();

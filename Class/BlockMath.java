@@ -3,11 +3,18 @@ import java.awt.*;
 import java.util.Random;
 
 public class BlockMath extends JPanel {
+    Random rand = new Random();
     private String value;
     private int x, y;
     private int speed = 2; 
     private int WIDTH = 256;
     private int HEIGHT = 64;
+    private String operator[] = {"+" , "-", "/", "*"};
+    int a, b, c;
+    String opr0 = operator[rand.nextInt(2)];
+
+    String opr1 = operator[rand.nextInt(4)];
+    String opr2 = operator[rand.nextInt(4)];
     
     public BlockMath(int startX, int startY) {
         this.x = startX;
@@ -50,9 +57,11 @@ public class BlockMath extends JPanel {
     
     private String generateMathValue() {
         Random rand = new Random();
-        int a = rand.nextInt(10) + 1;
-        int b = rand.nextInt(10) + 1;
-        return a + " + " + b; 
+
+        a = rand.nextInt(10) + 1;
+        b = rand.nextInt(10) + 1;
+        c = rand.nextInt(10) + 1;
+        return opr0 + " ( " + a + " " + opr1 + " " + b + opr2 + " " +c + " ) "; 
     }
     
     public void move() {
@@ -61,10 +70,78 @@ public class BlockMath extends JPanel {
     }
     
     public int getValue() {
-        String[] parts = value.split(" \\+ "); // Pisahkan berdasarkan " + "
-        int num1 = Integer.parseInt(parts[0].trim()); // Angka pertama
-        int num2 = Integer.parseInt(parts[1].trim()); // Angka kedua
-        return num1 + num2; // Kembalikan hasil penjumlahan
+        int hirarkiOpr1 = 0, hirarkiOpr2 = 0;
+        switch(opr1){
+            case "+" : case "-":
+                hirarkiOpr1 = 2;
+                break;
+            case "*" : case "/":
+                hirarkiOpr1 = 1;
+                break;
+        }
+        switch(opr2){
+            case "+" : case "-":
+                hirarkiOpr2 = 2;
+                break;
+            case "*" : case "/":
+                hirarkiOpr2 = 1;
+                break;
+        }
+        int hasil = 0;
+
+        if(hirarkiOpr1 >= hirarkiOpr2){
+            switch(opr1){
+            case "+":
+                hasil = a + b;
+                break;
+            case "-":
+                hasil = a - b;
+                break;
+            case "*":
+                hasil = a * b;
+                break;
+            case "/":
+                hasil = a / b;
+                break;
+            }
+            switch(opr2){
+            case "+":
+                hasil += c;
+                break;
+            case "-":
+                hasil -= c;
+                break;
+            case "*":
+                hasil *= c;
+                break;
+            case "/":
+                hasil/=c;
+            }
+        }else{
+            switch(opr2){
+            case "+":
+                hasil = b + c;
+                break;
+            case "-":
+                hasil = b - c;
+                break;
+            case "*":
+                hasil = b * c ;
+                break;
+            case "/":
+                hasil = b / c;
+                break;
+        }
+        switch(opr1){
+            case "*":
+                hasil = a * hasil;
+                break;
+            case "/":
+                hasil = a / hasil;
+                break;
+            }
+        }
+        return hasil;
     }
     
 
