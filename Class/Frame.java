@@ -218,7 +218,12 @@ public class Frame extends JPanel implements ActionListener {
                         score += block.getValue(); 
                         break;
                     case "-":
-                        score -= block.getValue();  
+                        if(block.getValue() < 0){
+                            score += Math.abs(block.getValue());
+                        }
+                        else{
+                            score -= block.getValue();  
+                        }                        
                         if(score <= 0){
                             score = 0;
                         }

@@ -61,7 +61,7 @@ public class BlockMath extends JPanel {
         a = rand.nextInt(10) + 1;
         b = rand.nextInt(10) + 1;
         c = rand.nextInt(10) + 1;
-        return opr0 + " ( " + a + " " + opr1 + " " + b + opr2 + " " +c + " ) "; 
+        return opr0 + " ( " + a + " " + opr1 + " " + b + " " + opr2 + " " + c + " ) "; 
     }
     
     public void move() {
@@ -89,7 +89,7 @@ public class BlockMath extends JPanel {
         }
         int hasil = 0;
 
-        if(hirarkiOpr1 >= hirarkiOpr2){
+        if(hirarkiOpr1 <= hirarkiOpr2){
             switch(opr1){
             case "+":
                 hasil = a + b;
@@ -115,16 +115,14 @@ public class BlockMath extends JPanel {
                 hasil *= c;
                 break;
             case "/":
+                if (hasil == 0) {
+                    hasil = 1;
+                }
                 hasil/=c;
+                break;
             }
         }else{
             switch(opr2){
-            case "+":
-                hasil = b + c;
-                break;
-            case "-":
-                hasil = b - c;
-                break;
             case "*":
                 hasil = b * c ;
                 break;
@@ -133,11 +131,20 @@ public class BlockMath extends JPanel {
                 break;
         }
         switch(opr1){
+            case "+":
+                hasil = a+ hasil;
+                break;
+            case "-":
+                hasil = a - hasil;
             case "*":
                 hasil = a * hasil;
                 break;
             case "/":
+                if(hasil == 0){
+                    hasil = 1;
+                }
                 hasil = a / hasil;
+
                 break;
             }
         }
