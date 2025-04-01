@@ -123,29 +123,30 @@ public class BlockMath extends JPanel {
             }
         }else{
             switch(opr2){
-            case "*":
-                hasil = b * c ;
-                break;
-            case "/":
-                hasil = b / c;
-                break;
+                case "*":
+                    hasil = b * c ;
+                    break;
+                case "/":
+                    hasil = b / c;
+                    break;
         }
-        switch(opr1){
-            case "+":
-                hasil = a+ hasil;
-                break;
-            case "-":
-                hasil = a - hasil;
-            case "*":
-                hasil = a * hasil;
-                break;
-            case "/":
-                if(hasil == 0){
-                    hasil = 1;
-                }
-                hasil = a / hasil;
+            switch(opr1){
+                case "+":
+                    hasil = a+ hasil;
+                    break;
+                case "-":
+                    hasil = a - hasil;
+                    break;
+                case "*":
+                    hasil = a * hasil;
+                    break;
+                case "/":
+                    if(hasil == 0){
+                        hasil = 1;
+                    }
+                    hasil = a / hasil;
 
-                break;
+                    break;
             }
         }
         return hasil;

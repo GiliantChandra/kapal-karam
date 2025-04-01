@@ -111,7 +111,7 @@ public class Frame extends JPanel implements ActionListener {
         });
         BlockTimer.start();
 
-        blockSpawnTimer = new Timer(2000, new ActionListener(){
+        blockSpawnTimer = new Timer(10000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 spawnBlock();
