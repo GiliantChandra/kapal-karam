@@ -191,9 +191,19 @@ public class Frame extends JPanel implements ActionListener {
 
     public void checkLose(){
         if(tanks.getTankHealth() <= 0){
-            frame.dispose(); // Tutup game lama
-            new EndGame();
-            resetGame();
+            gameLoop.stop();
+            enemySpawnTimer.stop();
+            enemyMoveTimer.stop();
+            BulletTimer.stop();
+            BlockTimer.stop();
+            blockSpawnTimer.stop();
+
+        SwingUtilities.invokeLater(() -> {
+            new EndGame(() -> {
+                resetGame();       // Reset game state
+                frame.setVisible(true); // Show game window
+            });
+        });
         }
     }
 
