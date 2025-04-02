@@ -133,4 +133,11 @@ public class TankAssembler extends JPanel {
            tankY + tankHeight > enemy.getEnemyY();
     }
 
+    public void resetTank() {
+        this.health = 1000;
+        this.tankX = 224;
+        this.tankY = 660;
+
+        repaint();
+    }
 }

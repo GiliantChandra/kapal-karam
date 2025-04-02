@@ -42,8 +42,6 @@ public class Frame extends JPanel implements ActionListener {
     BlockMath blockmath = new BlockMath(0, 0);
     private ArrayList<BlockMath> blockMath = new ArrayList<>();
 
-
-
     Frame() {
         width = columns * tileSize;
         height = rows * tileSize;
@@ -187,7 +185,16 @@ public class Frame extends JPanel implements ActionListener {
         upgradeBullet();
         checkCollisions();
         checkCollisionsTank();
+        checkLose();
         repaint();
+    }
+
+    public void checkLose(){
+        if(tanks.getTankHealth() <= 0){
+            frame.dispose(); // Tutup game lama
+            new EndGame();
+            resetGame();
+        }
     }
 
     private void checkCollisions() {
@@ -241,7 +248,6 @@ public class Frame extends JPanel implements ActionListener {
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (tanks.isHit(enemy)){
-                // game over
                 tanks.healthSubtractionAfterCollisionWithTank(); 
                 remove(enemy);
                 enemies.remove(enemy);
@@ -278,5 +284,36 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     // validasi game over.
+    // reset game
+    public void resetGame() {
+        score = 0;
+        targetScore = 20;
+
+        tanks.resetTank();
+
+        bullet.setidxBullet(0);
+
+        for (Enemy enemy : enemies) {
+            remove(enemy);
+        }
+        for (Bullet bullet : bullets) {
+            remove(bullet);
+        }
+        for (BlockMath block : blockMath) {
+            remove(block);
+        }
+        enemies.clear();
+        bullets.clear();
+        blockMath.clear();
+
+        gameLoop.start();
+        enemySpawnTimer.start();
+        enemyMoveTimer.start();
+        BulletTimer.start();
+        BlockTimer.start();
+        blockSpawnTimer.start();
+
+        repaint();
+    }
 
 }
