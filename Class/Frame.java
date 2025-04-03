@@ -198,14 +198,17 @@ public class Frame extends JPanel implements ActionListener {
             BlockTimer.stop();
             blockSpawnTimer.stop();
 
-        SwingUtilities.invokeLater(() -> {
+            // new EndGame(this.score);
+            // frame.setVisible(true);
+            // resetGame();
+
             new EndGame(() -> {
-                resetGame();       // Reset game state
+                resetGame(); // Reset game state
                 frame.setVisible(true); // Show game window
-            });
-        });
-        }
+            }, score);
+        };
     }
+    
 
     private void checkCollisions() {
         for (int i = 0; i < bullets.size(); i++) {
@@ -324,6 +327,10 @@ public class Frame extends JPanel implements ActionListener {
         blockSpawnTimer.start();
 
         repaint();
+    }
+
+    public int getScore() {
+        return score;
     }
 
 }

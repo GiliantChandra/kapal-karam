@@ -5,13 +5,18 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class EndGame extends JPanel {
-    private BufferedImage Menu;
+    private BufferedImage Menu, Score, Record, YouLose;
     private JFrame gameOverFrame;
+    
 
-    public EndGame(Runnable onRestart) {
+    public EndGame(Runnable onRestart , int score) {
         // Load Background
         try {
             Menu = ImageIO.read(new File("assets/PNG/Setting/Window.png"));
+            Score = ImageIO.read(new File("assets/PNG/You_Lose/Score.png"));
+            Record = ImageIO.read(new File("assets/PNG/You_Lose/Record.png"));
+            YouLose = ImageIO.read(new File("assets/PNG/You_Lose/Header.png"));
+
         } catch (Exception e) {
             System.err.println("Error loading background: " + e.getMessage());
         }
@@ -24,11 +29,13 @@ public class EndGame extends JPanel {
         
         // Supaya latar belakang transparan
         this.setOpaque(false);
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout());
+        
 
         // Buat tombol dengan gambar
-        JButton playAgainButton = createImageButton("assets/PNG/Buttons/BTNs/Play_BTN.png", 150, 150);
-        JButton quitButton = createImageButton("assets/PNG/Buttons/BTNs/Quit_BTN.png", 150, 60);
+        JButton playAgainButton = createImageButton("assets/PNG/Buttons/BTNs/Play_BTN.png", 75, 75);
+        JButton quitButton = createImageButton("assets/PNG/Buttons/BTNs/Close_BTN.png", 75, 75);
+        JButton infoButton = createImageButton("assets/PNG/Buttons/BTNs/Info_BTN.png", 75, 75);
 
         // Tambahkan event listener
         playAgainButton.addActionListener(e -> {
@@ -43,9 +50,11 @@ public class EndGame extends JPanel {
         // Panel untuk tombol
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
+        buttonPanel.add(infoButton);
         buttonPanel.add(playAgainButton);
         buttonPanel.add(quitButton);
-        this.add(buttonPanel);
+        
+        this.add(buttonPanel, BorderLayout.SOUTH);
 
         gameOverFrame.setVisible(true);
         repaint(); 
@@ -56,9 +65,17 @@ public class EndGame extends JPanel {
         super.paintComponent(g);
         if (Menu != null) {
             g.drawImage(Menu, 0, 0, getWidth(), getHeight(), this);
+            g.drawImage(YouLose,90, 12 ,200, 28 , this);
+            g.drawImage(Score,20, 125 , 150, 28, this);
+            g.drawImage(Record,20, 250, 150, 28,  this);
+
         }
+        
+       
+        
     }
 
+    
     private JButton createImageButton(String imagePath, int width, int height) {
         ImageIcon icon = new ImageIcon(imagePath);
         
@@ -67,6 +84,7 @@ public class EndGame extends JPanel {
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
         JButton button = new JButton(resizedIcon);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
