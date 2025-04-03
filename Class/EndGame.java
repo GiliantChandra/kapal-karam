@@ -1,82 +1,76 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class EndGame extends JPanel{
-    private BufferedImage Menu;    
+public class EndGame extends JPanel {
+    private BufferedImage Menu;
     private JFrame gameOverFrame;
-    
 
     public EndGame(Runnable onRestart) {
-
+        // Load Background
         try {
             Menu = ImageIO.read(new File("assets/PNG/Setting/Window.png"));
         } catch (Exception e) {
             System.err.println("Error loading background: " + e.getMessage());
         }
 
-        gameOverFrame = new JFrame("Game Over");
-        gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameOverFrame = new JFrame();
+        gameOverFrame.setUndecorated(true); // Hilangkan title bar
         gameOverFrame.setSize(384, 512);
-        gameOverFrame.setLocationRelativeTo(null); // Supaya di tengah layar
-
-        // this.setBounds(0, 0, 384, 512);
-        // gameOverFrame.add(this);
-
-        gameOverFrame.setContentPane(this); 
+        gameOverFrame.setLocationRelativeTo(null);
+        gameOverFrame.setContentPane(this);
+        
+        // Supaya latar belakang transparan
+        this.setOpaque(false);
         this.setLayout(new GridBagLayout());
 
-        JLabel message = new JLabel("Game Over! Ingin bermain lagi?");
-        message.setForeground(Color.WHITE); // style
-        message.setFont(new Font("Arial", Font.BOLD, 20));
+        // Buat tombol dengan gambar
+        JButton playAgainButton = createImageButton("assets/PNG/Buttons/BTNs/Play_BTN.png", 150, 150);
+        JButton quitButton = createImageButton("assets/PNG/Buttons/BTNs/Quit_BTN.png", 150, 60);
 
-        JButton playAgainButton = new JButton("Play Again");
-        JButton quitButton = new JButton("Quit");
-
+        // Tambahkan event listener
         playAgainButton.addActionListener(e -> {
-            gameOverFrame.dispose(); // Tutup window game over
+            gameOverFrame.dispose();
             onRestart.run();
         });
 
         quitButton.addActionListener(e -> {
-            System.exit(0); // Keluar dari game
+            System.exit(0);
         });
 
-        // j panel for button is better.
-        // gameOverFrame.add(message);
-        // gameOverFrame.add(playAgainButton);
-        // gameOverFrame.add(quitButton);
+        // Panel untuk tombol
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false);
         buttonPanel.add(playAgainButton);
         buttonPanel.add(quitButton);
-        
+        this.add(buttonPanel);
+
         gameOverFrame.setVisible(true);
-
-        
-        // try {
-        //     Menu = ImageIO.read(new File("assets/PNG/Setting/Window.png"));
-            
-        // } catch (Exception e) {
-        //     System.out.println("Error loading images: " + e.getMessage());
-        // }
-
-        // repaint();
+        repaint(); 
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
         if (Menu != null) {
-            g2d.drawImage(Menu, 0, 0, getWidth(), getHeight(), null);
+            g.drawImage(Menu, 0, 0, getWidth(), getHeight(), this);
         }
+    }
 
+    private JButton createImageButton(String imagePath, int width, int height) {
+        ImageIcon icon = new ImageIcon(imagePath);
         
+        // Resize gambar sesuai ukuran tombol
+        Image resizedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+        JButton button = new JButton(resizedIcon);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setOpaque(false);
+        return button;
     }
 }
-
