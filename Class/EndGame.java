@@ -7,9 +7,13 @@ import javax.imageio.ImageIO;
 public class EndGame extends JPanel {
     private BufferedImage Menu, Score, Record, YouLose;
     private JFrame gameOverFrame;
+    private int score, highscore;
     
 
-    public EndGame(Runnable onRestart , int score) {
+    public EndGame(Runnable onRestart , int score, int highscore) {
+
+        this.score = score;
+        this.highscore = highscore;
         // Load Background
         try {
             Menu = ImageIO.read(new File("assets/PNG/Setting/Window.png"));
@@ -70,6 +74,17 @@ public class EndGame extends JPanel {
             g.drawImage(Record,20, 250, 150, 28,  this);
 
         }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+
+        
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Arial", Font.BOLD, 32));
+        g2d.drawString(String.valueOf(score), 210, 150);
+        g2d.drawString(String.valueOf(highscore), 210, 275);
+
         
        
         

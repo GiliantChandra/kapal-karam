@@ -20,6 +20,8 @@ public class Frame extends JPanel implements ActionListener {
     private int columns = 16;
     private int width;
     private int height;
+    private static int highscore = 0;
+
     Random random = new Random();
 
     private int score = 0;
@@ -187,6 +189,7 @@ public class Frame extends JPanel implements ActionListener {
         checkCollisionsTank();
         checkLose();
         repaint();
+        checkHighScore();
     }
 
     public void checkLose(){
@@ -205,7 +208,7 @@ public class Frame extends JPanel implements ActionListener {
             new EndGame(() -> {
                 resetGame(); // Reset game state
                 frame.setVisible(true); // Show game window
-            }, score);
+            }, score, highscore);
         };
     }
     
@@ -327,6 +330,12 @@ public class Frame extends JPanel implements ActionListener {
         blockSpawnTimer.start();
 
         repaint();
+    }
+
+    public void checkHighScore(){
+        if(this.score > this.highscore){
+            this.highscore = this.score;
+        }
     }
 
     public int getScore() {
