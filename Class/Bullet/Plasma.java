@@ -1,6 +1,6 @@
 package Bullet;
 public class Plasma extends BulletType {
     public Plasma() {
-        super("assets/PNG/Effects/Plasma.png", 100, 100);
+        super("assets/PNG/Effects/Plasma.png", 225, 175);
     }
 }

@@ -3,15 +3,19 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.*;
 import java.util.Random;
 
+
 import Bullet.Bullet;
 import Enemy.Enemy;
 //import Enemy.EnemyAbs;
 import Enemy.EnemyFactory;
+
+
 
 
 public class Frame extends JPanel implements ActionListener {
@@ -21,6 +25,8 @@ public class Frame extends JPanel implements ActionListener {
     private int width;
     private int height;
     private static int highscore = 0;
+
+    Menu menu = new Menu();
 
     Random random = new Random();
 
@@ -57,6 +63,8 @@ public class Frame extends JPanel implements ActionListener {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+       
+
         setBackground(Color.BLACK);
         setLayout(null); 
 
@@ -71,6 +79,17 @@ public class Frame extends JPanel implements ActionListener {
 
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
+
+        // audio
+        String audioPath = System.getProperty("user.dir") + "/assets/music/BGM.WAV";
+        System.out.println("Loading audio from: " + audioPath); // Debug
+
+        //load audio
+        audioManager.loadSound("background", new File(audioPath).getAbsolutePath());
+    
+
+        //audio play
+        audioManager.play("background", true);
 
         enemySpawnTimer = new Timer(500, new ActionListener() {
             @Override
@@ -134,7 +153,22 @@ public class Frame extends JPanel implements ActionListener {
             }
         });
 
-        
+        JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
+        pauseButton.setBounds(width - 60, 10, 50,50);
+        frame.add(pauseButton);
+        pauseButton.setVisible(true);
+
+        pauseButton.addActionListener(e -> {
+            gameLoop.stop();
+            enemySpawnTimer.stop();
+            enemyMoveTimer.stop();
+            BulletTimer.stop();
+            BlockTimer.stop();
+            blockSpawnTimer.stop();
+
+            new Pause();
+            
+        });
 
 
         frame.setFocusable(true);
