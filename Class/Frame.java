@@ -26,6 +26,9 @@ public class Frame extends JPanel implements ActionListener {
     private int height;
     private static int highscore = 0;
 
+    private Image backgroundImage;
+    private String[] latar = {"assets/PNG/Space Background (2).png", "assets/PNG/Main_UI/BG.png"};
+
     Menu menu = new Menu();
 
     Random random = new Random();
@@ -64,8 +67,9 @@ public class Frame extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
        
+        backgroundImage = new ImageIcon(latar[1]).getImage();
 
-        setBackground(Color.BLACK);
+        
         setLayout(null); 
 
         
@@ -327,6 +331,8 @@ public class Frame extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, 10, 20);
         
