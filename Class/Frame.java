@@ -42,7 +42,7 @@ public class Frame extends JPanel implements ActionListener {
     Timer BulletTimer;
     Timer BlockTimer;
     Timer blockSpawnTimer;
-    JFrame frame = new JFrame("Ya main last war lah !!");
+    // JFrame frame = new JFrame("Ya main last war lah !!");
 
     TankAssembler tanks = new TankAssembler();
     private ArrayList<Enemy> enemies = new ArrayList<>();
@@ -61,10 +61,10 @@ public class Frame extends JPanel implements ActionListener {
         int playerY = height - 110; 
 
 
-        frame.setSize(width , height);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.setSize(width , height);
+        // frame.setLocationRelativeTo(null);
+        // frame.setResizable(false);
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
        
         backgroundImage = new ImageIcon(latar[1]).getImage();
@@ -76,10 +76,10 @@ public class Frame extends JPanel implements ActionListener {
         tanks.setBounds(playerX, playerY - 8, 1200, 84);
         add(tanks);
 
-        frame.add(this);
-        setFocusable(true);
-        requestFocusInWindow(); 
-        frame.setVisible(true);
+        // frame.add(this);
+        // setFocusable(true);
+        // requestFocusInWindow(); 
+        // frame.setVisible(true);
 
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
@@ -144,7 +144,7 @@ public class Frame extends JPanel implements ActionListener {
 
 
 
-        frame.addKeyListener(new KeyAdapter() {
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -157,26 +157,29 @@ public class Frame extends JPanel implements ActionListener {
             }
         });
 
-        JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
-        pauseButton.setBounds(width - 60, 10, 50,50);
-        frame.add(pauseButton);
-        pauseButton.setVisible(true);
+        // JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
+        // pauseButton.setBounds(width - 60, 10, 50,50);
+        // frame.add(pauseButton);
+        // pauseButton.setVisible(true);
 
-        pauseButton.addActionListener(e -> {
-            gameLoop.stop();
-            enemySpawnTimer.stop();
-            enemyMoveTimer.stop();
-            BulletTimer.stop();
-            BlockTimer.stop();
-            blockSpawnTimer.stop();
+        // pauseButton.addActionListener(e -> {
+        //     gameLoop.stop();
+        //     enemySpawnTimer.stop();
+        //     enemyMoveTimer.stop();
+        //     BulletTimer.stop();
+        //     BlockTimer.stop();
+        //     blockSpawnTimer.stop();
 
-            new Pause();
+        //     new Pause();
             
-        });
+        // });
 
 
-        frame.setFocusable(true);
-        frame.requestFocus();
+        // frame.setFocusable(true);
+        // frame.requestFocus();
+
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
 
@@ -245,7 +248,7 @@ public class Frame extends JPanel implements ActionListener {
 
             new EndGame(() -> {
                 resetGame(); // Reset game state
-                frame.setVisible(true); // Show game window
+                // frame.setVisible(true); // Show game window
             }, score, highscore);
         };
     }
