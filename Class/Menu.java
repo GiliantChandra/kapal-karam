@@ -10,7 +10,7 @@ public class Menu extends JPanel{
     ImageIcon hoverIcon = new ImageIcon(new ImageIcon(hoverImagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
 
     JButton button = new JButton(normalIcon);
-    button.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
+    button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
     button.setBorderPainted(false);
     button.setContentAreaFilled(false);
     button.setFocusPainted(false);

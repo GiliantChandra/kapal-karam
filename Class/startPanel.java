@@ -7,6 +7,8 @@ public class startPanel extends JPanel{
 
     public startPanel(JFrame frame) {
         this.frame = frame;
+
+        Menu menu = new Menu();
         
         setLayout(null);
 
@@ -25,30 +27,38 @@ public class startPanel extends JPanel{
         ImageIcon title = new ImageIcon("assets/PNG/Main_Menu/Header.png");
         Image scaledTitle = title.getImage().getScaledInstance(300, 80, Image.SCALE_SMOOTH);
         JLabel titleLabel = new JLabel(new ImageIcon(scaledTitle));
-        titleLabel.setBounds(100, 50, 300, 80);
+        titleLabel.setBounds(106, 110, 300, 80);
         bgLabel.add(titleLabel);
 
         //start
-        JButton startButton = new JButton(scaleIcon("assets/PNG/Main_Menu/Start_BTN.png", 200, 60));
-        startButton.setBounds(156, 180, 200, 60);
-        styleButton(startButton);
+        JButton startButton = menu.createImageButton(
+            "assets/PNG/Main_Menu/Start_BTN.png",
+            "assets/PNG/Main_Menu/Start_BTN_Hover.png",
+            200, 60
+        );
+        startButton.setBounds(156, 310, 200, 60);
         startButton.addActionListener(e -> startGame());
         bgLabel.add(startButton);
 
         //setting
-        JButton settingButton = new JButton(scaleIcon("assets/PNG/Main_Menu/Settings_BTN.png", 180, 50));
-        settingButton.setBounds(166, 270, 180, 50);
-        styleButton(settingButton);
+        JButton settingButton = menu.createImageButton(
+            "assets/PNG/Main_Menu/Settings_BTN.png",
+            "assets/PNG/Buttons/BTNs_Active/Settings_BTN.png",
+            40, 40
+        );
+        settingButton.setBounds(452, 698, 40, 40);
         settingButton.addActionListener(e -> {
-            //utk debug
-            System.out.println("Setting clicked....");
+            System.out.println("Settings clicked....");
         });
         bgLabel.add(settingButton);
 
         // Exit 
-        JButton exitButton = new JButton(scaleIcon("assets/PNG/Main_Menu/Exit_BTN.png", 200, 50));
-        exitButton.setBounds(156, 360, 200, 50);
-        styleButton(exitButton);
+        JButton exitButton = menu.createImageButton(
+            "assets/PNG/Main_Menu/Exit_BTN.png",
+            "assets/PNG/Main_Menu/Exit_BTN_Hover.png",
+            200, 60
+        );
+        exitButton.setBounds(156, 385, 200, 60);
         exitButton.addActionListener(e -> System.exit(0));
         bgLabel.add(exitButton);
 
