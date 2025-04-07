@@ -30,6 +30,8 @@ public class EndGame extends JPanel {
 
         gameOverFrame = new JFrame();
         gameOverFrame.setUndecorated(true); // Hilangkan title bar
+        gameOverFrame.setBackground(new Color(0, 0, 0, 0));
+
         gameOverFrame.setSize(384, 512);
         gameOverFrame.setLocationRelativeTo(null);
         gameOverFrame.setContentPane(this);

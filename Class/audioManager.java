@@ -7,7 +7,7 @@ import java.util.*;
 
 public class audioManager {
     private static ArrayList<audioClip> sounds = new ArrayList<>();
-    private static float masterVolume = 0.7f;
+    private static float masterVolume = 0.1f;
 
     public static class audioClip {
         String name;

@@ -13,6 +13,8 @@ public class Pause extends JPanel {
 
     public Pause(PauseListener listener) {
         pauseFrame.setUndecorated(true);
+        pauseFrame.setBackground(new Color(0, 0, 0, 0));
+
         pauseFrame.setSize(416, 384);
         pauseFrame.setLocationRelativeTo(null);
         pauseFrame.setContentPane(this);
@@ -62,5 +64,26 @@ public class Pause extends JPanel {
     public interface PauseListener {
         void onResume();
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (Display != null) {
+            g.drawImage(Display, 0, 50, getWidth(), getHeight(), this);
+
+        }
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+
+        
+        
+
+        
+       
+        
+    }
+
     
 }

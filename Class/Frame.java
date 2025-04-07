@@ -145,7 +145,7 @@ public class Frame extends JPanel implements ActionListener {
 
 
         addKeyListener(new KeyAdapter() {
-            @Override
+            @Override 
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     tanks.moveLeft();
@@ -156,6 +156,8 @@ public class Frame extends JPanel implements ActionListener {
                 }
             }
         });
+
+        
 
         JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
         pauseButton.setBounds(width - 60, 10, 50,50);
@@ -177,6 +179,8 @@ public class Frame extends JPanel implements ActionListener {
                 BulletTimer.start();
                 BlockTimer.start();
                 blockSpawnTimer.start();
+
+                requestFocusInWindow();
             });
             
             
