@@ -62,12 +62,15 @@ public class Frame extends JPanel implements ActionListener {
     private boolean rightPressed = false;
     private boolean spacePressed = false;
 
+    int playerX;
+    int playerY;
+
     Frame() {
         width = columns * tileSize;
         height = rows * tileSize;
 
-        int playerX = tileSize * columns / 2 - 32; 
-        int playerY = height - 110; 
+        playerX = tileSize * columns / 2 - 32; 
+        playerY = height - 110; 
 
        
         backgroundImage = new ImageIcon(latar[0]).getImage();
@@ -449,6 +452,12 @@ public class Frame extends JPanel implements ActionListener {
         BulletTimer.start();
         BlockTimer.start();
         blockSpawnTimer.start();
+
+        leftPressed = false;
+        rightPressed = false;
+        spacePressed = false;
+
+        tanks.setBounds(playerX, playerY - 8, 1200, 84);
 
         repaint();
     }
