@@ -29,6 +29,10 @@ public class Frame extends JPanel implements ActionListener {
     private Image backgroundImage;
     private String[] latar = {"assets/PNG/Space Background (2).png", "assets/PNG/Main_UI/BG.png"};
 
+    private boolean isPaused = false;
+    private Pause pausePanel;
+
+
     Menu menu = new Menu();
 
     Random random = new Random();
@@ -147,13 +151,18 @@ public class Frame extends JPanel implements ActionListener {
         addKeyListener(new KeyAdapter() {
             @Override 
             public void keyPressed(KeyEvent e) {
+                System.out.println("Key pressed: " + e.getKeyCode());
+
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     tanks.moveLeft();
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     tanks.moveRight();
                 } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     spawnBullet();
+                } else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    togglePause(); 
                 }
+                    
             }
         });
 
@@ -173,6 +182,7 @@ public class Frame extends JPanel implements ActionListener {
             blockSpawnTimer.stop();
 
             Pause pauseFrame = new Pause(() -> {
+                
                 gameLoop.start();
                 enemySpawnTimer.start();
                 enemyMoveTimer.start();
@@ -186,6 +196,10 @@ public class Frame extends JPanel implements ActionListener {
             
         });
 
+        
+
+
+
 
         // frame.setFocusable(true);
         // frame.requestFocus();
@@ -193,6 +207,40 @@ public class Frame extends JPanel implements ActionListener {
         setFocusable(true);
         requestFocusInWindow();
     }
+    
+
+    
+
+    public void togglePause() {
+        if (!isPaused) {
+            gameLoop.stop();
+            enemySpawnTimer.stop();
+            enemyMoveTimer.stop();
+            BulletTimer.stop();
+            BlockTimer.stop();
+            blockSpawnTimer.stop();
+    
+            isPaused = true;
+    
+            pausePanel = new Pause(() -> {
+                togglePause(); // Kalau klik tombol resume
+            });
+        } else {
+            gameLoop.start();
+            enemySpawnTimer.start();
+            enemyMoveTimer.start();
+            BulletTimer.start();
+            BlockTimer.start();
+            blockSpawnTimer.start();
+    
+            isPaused = false;
+    
+            if (pausePanel != null) {
+                pausePanel.pauseFrame.dispose();
+            }
+        }
+    }
+    
 
 
     private void spawnEnemy() {

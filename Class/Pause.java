@@ -75,6 +75,9 @@ public class Pause extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Arial", Font.BOLD, 48));
+        g2d.drawString("Game Paused", 50, 190);
 
 
         
