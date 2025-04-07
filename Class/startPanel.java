@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 public class startPanel extends JPanel{
     private JFrame frame;
+    public Frame gamePanel;
 
     public startPanel(JFrame frame) {
         this.frame = frame;
@@ -33,7 +34,7 @@ public class startPanel extends JPanel{
         //start
         JButton startButton = menu.createImageButton(
             "assets/PNG/Main_Menu/Start_BTN.png",
-            "assets/PNG/Main_Menu/Start_BTN_Hover.png",
+            "assets/PNG/Buttons/BTNs_Active/Play_BTN.png",
             200, 60
         );
         startButton.setBounds(156, 310, 200, 60);
@@ -55,7 +56,7 @@ public class startPanel extends JPanel{
         // Exit 
         JButton exitButton = menu.createImageButton(
             "assets/PNG/Main_Menu/Exit_BTN.png",
-            "assets/PNG/Main_Menu/Exit_BTN_Hover.png",
+            "assets/PNG/Buttons/BTNs_Active/Close_BTN.png",
             200, 60
         );
         exitButton.setBounds(156, 385, 200, 60);
@@ -80,12 +81,16 @@ public class startPanel extends JPanel{
     }
 
     private void startGame() {
-        Frame gamePanel = new Frame();
+        gamePanel = new Frame();
         gamePanel.setPreferredSize(new Dimension(512, 753));
         frame.setContentPane(gamePanel);
         frame.pack(); // resize frame ikutin game panel
         frame.revalidate();
         gamePanel.requestFocusInWindow();
+    }
+
+    public Frame getGamePanel(){
+        return gamePanel;
     }
 
     private void styleButton(JButton button) {

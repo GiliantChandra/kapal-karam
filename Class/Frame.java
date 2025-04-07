@@ -157,22 +157,30 @@ public class Frame extends JPanel implements ActionListener {
             }
         });
 
-        // JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
-        // pauseButton.setBounds(width - 60, 10, 50,50);
-        // frame.add(pauseButton);
-        // pauseButton.setVisible(true);
+        JButton pauseButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Pause_BTN.png", "assets/PNG/Buttons/BTNs_Active/Pause_BTN.png", 50, 50);
+        pauseButton.setBounds(width - 60, 10, 50,50);
+        add(pauseButton);
+        pauseButton.setVisible(true);
 
-        // pauseButton.addActionListener(e -> {
-        //     gameLoop.stop();
-        //     enemySpawnTimer.stop();
-        //     enemyMoveTimer.stop();
-        //     BulletTimer.stop();
-        //     BlockTimer.stop();
-        //     blockSpawnTimer.stop();
+        pauseButton.addActionListener(e -> {
+            gameLoop.stop();
+            enemySpawnTimer.stop();
+            enemyMoveTimer.stop();
+            BulletTimer.stop();
+            BlockTimer.stop();
+            blockSpawnTimer.stop();
 
-        //     new Pause();
+            Pause pauseFrame = new Pause(() -> {
+                gameLoop.start();
+                enemySpawnTimer.start();
+                enemyMoveTimer.start();
+                BulletTimer.start();
+                BlockTimer.start();
+                blockSpawnTimer.start();
+            });
             
-        // });
+            
+        });
 
 
         // frame.setFocusable(true);
