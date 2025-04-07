@@ -57,6 +57,11 @@ public class Frame extends JPanel implements ActionListener {
     BlockMath blockmath = new BlockMath(0, 0);
     private ArrayList<BlockMath> blockMath = new ArrayList<>();
 
+    //for gerak sambil serang
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean spacePressed = false;
+
     Frame() {
         width = columns * tileSize;
         height = rows * tileSize;
@@ -64,14 +69,8 @@ public class Frame extends JPanel implements ActionListener {
         int playerX = tileSize * columns / 2 - 32; 
         int playerY = height - 110; 
 
-
-        // frame.setSize(width , height);
-        // frame.setLocationRelativeTo(null);
-        // frame.setResizable(false);
-        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
        
-        backgroundImage = new ImageIcon(latar[1]).getImage();
+        backgroundImage = new ImageIcon(latar[0]).getImage();
 
         
         setLayout(null); 
@@ -79,11 +78,6 @@ public class Frame extends JPanel implements ActionListener {
         
         tanks.setBounds(playerX, playerY - 8, 1200, 84);
         add(tanks);
-
-        // frame.add(this);
-        // setFocusable(true);
-        // requestFocusInWindow(); 
-        // frame.setVisible(true);
 
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
@@ -116,7 +110,7 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemyMoveTimer.start();
 
-        BulletTimer = new Timer(50, new ActionListener() {
+        BulletTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Bullet b : bullets) {
@@ -151,20 +145,26 @@ public class Frame extends JPanel implements ActionListener {
         addKeyListener(new KeyAdapter() {
             @Override 
             public void keyPressed(KeyEvent e) {
-                System.out.println("Key pressed: " + e.getKeyCode());
-
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    tanks.moveLeft();
+                    leftPressed = true;
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    tanks.moveRight();
+                    rightPressed = true;
                 } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    spawnBullet();
-                } else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                    togglePause(); 
+                    spacePressed = true;
                 }
-                    
             }
-        });
+        
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    leftPressed = false;
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    rightPressed = false;
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spacePressed = false;
+                }
+            }
+        });   
 
         
 
@@ -260,14 +260,21 @@ public class Frame extends JPanel implements ActionListener {
         repaint();
     }  
 
-    public void spawnBullet () {
-        Bullet newBullet = new Bullet(tanks.getTankX() , tanks.getTankY() - 22);
-        newBullet.setidxBullet(upgradeBullet());
-        bullets.add(newBullet);
-        add(newBullet);
-        newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
-        
-        repaint();
+    // utk bullet cooldown.
+    private long lastShotTime = 0;
+    private long shootingCooldown = 200; // milliseconds
+
+    public void spawnBullet() {
+        long now = System.currentTimeMillis();
+        if (now - lastShotTime >= shootingCooldown) {
+            Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY() - 22);
+            newBullet.setidxBullet(upgradeBullet());
+            bullets.add(newBullet);
+            add(newBullet);
+            newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
+            lastShotTime = now;
+            repaint();
+        }
     }
 
     public void spawnBlock(){
@@ -285,6 +292,16 @@ public class Frame extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (leftPressed) {
+            tanks.moveLeft();
+        }
+        if (rightPressed) {
+            tanks.moveRight();
+        }
+        if (spacePressed) {
+            spawnBullet();
+        }
+
         upgradeBullet();
         checkCollisions();
         checkCollisionsTank();
@@ -292,6 +309,7 @@ public class Frame extends JPanel implements ActionListener {
         repaint();
         checkHighScore();
     }
+
 
     public void checkLose(){
         if(tanks.getTankHealth() <= 0){

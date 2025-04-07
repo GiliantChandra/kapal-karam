@@ -16,7 +16,7 @@ public class TankAssembler extends JPanel {
     int tankY = 660;
     private int tankWidth = 40;
     private int tankHeight = 64;
-    private int speed = 10;
+    private int speed = 5;
 
     String[] BasePath = {"assets/PNG/Hulls_Color_D/Hull_08.png", 
                          "assets/PNG/Hulls_Color_D/Hull_07.png",
