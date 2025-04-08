@@ -98,9 +98,7 @@ public class TankAssembler extends JPanel {
             g2d.drawImage(turret, 5, -20, 32, 64, null);
         }
 
-        g2d.setColor(Color.RED);
-
-        g2d.fillRoundRect(20, 65, health/5 , 8, 5, 5);
+        
         
     }
 

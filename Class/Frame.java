@@ -233,7 +233,7 @@ public class Frame extends JPanel implements ActionListener {
 
     public void checkPosition(){
         for(Enemy enemy : enemies){
-            if(enemy.getEnemyY() > 1024){
+            if(enemy.getEnemyY() > 768){
                 enemies.remove(enemy);
             }
         }
@@ -422,6 +422,7 @@ public class Frame extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
         g.setColor(Color.WHITE);
@@ -436,6 +437,22 @@ public class Frame extends JPanel implements ActionListener {
         for (Bullet bullet : bullets) {
             bullet.draw(g);
         }
+
+        int barWidth = 380;
+        int barHeight = 20;
+        int barX = (512 - barWidth) / 2;
+        int barY = 728;
+
+        int currentBarWidth = (int) ((double) tanks.getTankHealth() / 1000 * barWidth);
+
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(barX, barY, barWidth, barHeight);
+
+        g2d.setColor(Color.RED);
+        g2d.fillRect(barX, barY, currentBarWidth, barHeight);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawRect(barX, barY, barWidth, barHeight);
         
         
     }
