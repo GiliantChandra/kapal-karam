@@ -17,7 +17,6 @@ import Enemy.EnemyFactory;
 
 
 
-
 public class Frame extends JPanel implements ActionListener {
     private int tileSize = 32;
     private int rows = 24;
@@ -26,7 +25,7 @@ public class Frame extends JPanel implements ActionListener {
     private int height;
     private static int highscore = 0;
 
-    private Image backgroundImage;
+    private Image backgroundImage; 
     private String[] latar = {"assets/PNG/Space Background (2).png", "assets/PNG/Main_UI/BG.png"};
 
     private boolean isPaused = false;
@@ -113,13 +112,13 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemyMoveTimer.start();
 
-        BulletTimer = new Timer(10, new ActionListener() {
+        BulletTimer = new Timer(60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Bullet b : bullets) {
                     b.move();
                 }
-                repaint();
+                
             }
         });
         BulletTimer.start();
@@ -130,7 +129,7 @@ public class Frame extends JPanel implements ActionListener {
                 for(BlockMath block : blockMath){
                     block.move();
                 }
-                repaint();
+                
             }
         });
         BlockTimer.start();
@@ -210,8 +209,40 @@ public class Frame extends JPanel implements ActionListener {
         setFocusable(true);
         requestFocusInWindow();
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (leftPressed) {
+            tanks.moveLeft();
+        }
+        if (rightPressed) {
+            tanks.moveRight();
+        }
+        if (spacePressed) {
+            spawnBullet();
+        }
+
+        upgradeBullet();
+        checkCollisions();
+        checkCollisionsTank();
+        checkLose();
+        repaint();
+        checkHighScore();
+    }
     
 
+    public void checkPosition(){
+        for(Enemy enemy : enemies){
+            if(enemy.getEnemyY() > 1024){
+                enemies.remove(enemy);
+            }
+        }
+        for(Bullet bullet : bullets){
+            if(bullet.getBulletY() < 0){
+                bullets.remove(bullet);
+            }
+        }
+    }
     
 
     public void togglePause() {
@@ -251,16 +282,14 @@ public class Frame extends JPanel implements ActionListener {
         int randomY = (random.nextInt(50)) - 300; 
         Enemy newEnemy = EnemyFactory.createEnemy();
         enemies.add(newEnemy);
-        add(newEnemy);
-        newEnemy.setBounds(randomX, randomY, 200, 200);
-        repaint();
+       
     }
 
     private void move() {
         for (Enemy enemy : enemies) {
             enemy.move();
         }
-        repaint();
+       
     }  
 
     // utk bullet cooldown.
@@ -273,10 +302,8 @@ public class Frame extends JPanel implements ActionListener {
             Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY() - 22);
             newBullet.setidxBullet(upgradeBullet());
             bullets.add(newBullet);
-            add(newBullet);
-            newBullet.setBounds(tanks.getTankX(), tanks.getTankY() - 30, 64, 64);
             lastShotTime = now;
-            repaint();
+            
         }
     }
 
@@ -293,25 +320,7 @@ public class Frame extends JPanel implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (leftPressed) {
-            tanks.moveLeft();
-        }
-        if (rightPressed) {
-            tanks.moveRight();
-        }
-        if (spacePressed) {
-            spawnBullet();
-        }
-
-        upgradeBullet();
-        checkCollisions();
-        checkCollisionsTank();
-        checkLose();
-        repaint();
-        checkHighScore();
-    }
+    
 
 
     public void checkLose(){
@@ -332,6 +341,8 @@ public class Frame extends JPanel implements ActionListener {
                 // frame.setVisible(true); // Show game window
             }, score, highscore);
         };
+
+        
     }
     
 
@@ -343,11 +354,9 @@ public class Frame extends JPanel implements ActionListener {
                 if (enemy.isHit(bullet)) {
                     bullets.remove(i);
                     enemy.setEnemyHealth(bullet.getBulletDamage());
-                    remove(bullet);
                     
                     if(enemy.getEnemyHealth() <= 0){
                         enemies.remove(j);
-                        remove(enemy);
                         score += 10;
                     }
                     break;
@@ -376,7 +385,7 @@ public class Frame extends JPanel implements ActionListener {
                 }
                 remove(block);
                 blockMath.remove(i);
-                repaint();
+                
             }
         }
 
@@ -387,15 +396,13 @@ public class Frame extends JPanel implements ActionListener {
             Enemy enemy = enemies.get(i);
             if (tanks.isHit(enemy)){
                 tanks.healthSubtractionAfterCollisionWithTank(); 
-                remove(enemy);
                 enemies.remove(enemy);
-                repaint();
+                
             } 
             else if(enemy.getEnemyY() > 768){
                 tanks.damaged();
-                remove(enemy);
                 enemies.remove(enemy);
-                repaint();
+                
             }  
         }
     }
@@ -421,6 +428,16 @@ public class Frame extends JPanel implements ActionListener {
         g.drawString("Score: " + score, 10, 20);
         
         g.drawString("HP: "  + tanks.getTankHealth(), 10, 40);
+
+        for (Enemy e : enemies) {
+            e.draw(g);
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.draw(g);
+        }
+        
+        
     }
 
     // validasi game over.
@@ -433,12 +450,6 @@ public class Frame extends JPanel implements ActionListener {
 
         bullet.setidxBullet(0);
 
-        for (Enemy enemy : enemies) {
-            remove(enemy);
-        }
-        for (Bullet bullet : bullets) {
-            remove(bullet);
-        }
         for (BlockMath block : blockMath) {
             remove(block);
         }
@@ -459,7 +470,7 @@ public class Frame extends JPanel implements ActionListener {
 
         tanks.setBounds(playerX, playerY - 8, 1200, 84);
 
-        repaint();
+    
     }
 
     public void checkHighScore(){
