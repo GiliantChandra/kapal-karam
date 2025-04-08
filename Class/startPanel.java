@@ -56,10 +56,10 @@ public class startPanel extends JPanel{
         // Exit 
         JButton exitButton = menu.createImageButton(
             "assets/PNG/Main_Menu/Exit_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Close_BTN.png",
-            200, 60
+            "assets/PNG/Main_Menu/Exit_BTN_Hover.png",
+            256, 128
         );
-        exitButton.setBounds(156, 385, 200, 60);
+        exitButton.setBounds(126, 385, 256, 128);
         exitButton.addActionListener(e -> System.exit(0));
         bgLabel.add(exitButton);
 
