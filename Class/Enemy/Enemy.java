@@ -41,7 +41,11 @@ public class Enemy {
             int healthBarWidth = (int) ((double) health / enemyType.getEnemyHealth() * maxHealthBarWidth);
 
             g2d.setColor(Color.RED);
-            g2d.fillRoundRect(x, y - 10, healthBarWidth, 6, 10, 10);  // Health bar di atas musuh
+            g2d.fillRect(x, y-10, healthBarWidth, 8);
+
+            g2d.setColor(Color.WHITE);
+            g2d.drawRect(x, y-10, maxHealthBarWidth, 8);
+
         }
     }
 

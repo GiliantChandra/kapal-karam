@@ -147,22 +147,22 @@ public class Frame extends JPanel implements ActionListener {
         addKeyListener(new KeyAdapter() {
             @Override 
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                     leftPressed = true;
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                     rightPressed = true;
-                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_W) {
                     spacePressed = true;
                 }
             }
         
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                     leftPressed = false;
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                     rightPressed = false;
-                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_W) {
                     spacePressed = false;
                 }
             }
