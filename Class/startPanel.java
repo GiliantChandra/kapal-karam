@@ -34,7 +34,7 @@ public class startPanel extends JPanel{
         //start
         JButton startButton = menu.createImageButton(
             "assets/PNG/Main_Menu/Start_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Play_BTN.png",
+            "assets/PNG/Main_Menu/Start_BTN_Hover.png",
             200, 60
         );
         startButton.setBounds(156, 310, 200, 60);
