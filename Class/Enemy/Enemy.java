@@ -11,6 +11,8 @@ public class Enemy {
     protected int x, y;
     protected EnemyAbs enemyType;
     private int health;
+    private boolean showHealthBar = false;
+
 
     public Enemy(int x, int y, EnemyAbs enemyType) {
         this.x = x;
@@ -31,30 +33,36 @@ public class Enemy {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
+    
         if (enemyImg != null) {
-           
             g2d.drawImage(enemyImg, x, y, enemyType.getEnemyWidth(), enemyType.getEnemyHeight(), null);
-
-            
-            int maxHealthBarWidth = 50;
-            int healthBarWidth = (int) ((double) health / enemyType.getEnemyHealth() * maxHealthBarWidth);
-
-            g2d.setColor(Color.RED);
-            g2d.fillRect(x, y-10, healthBarWidth, 8);
-
-            g2d.setColor(Color.WHITE);
-            g2d.drawRect(x, y-10, maxHealthBarWidth, 8);
-
+    
+            if (showHealthBar) {
+                int maxHealthBarWidth = 50;
+                int healthBarWidth = (int) ((double) health / enemyType.getEnemyHealth() * maxHealthBarWidth);
+    
+                int barX = x;
+                int barY = y - 10;
+    
+                g2d.setColor(Color.RED);
+                g2d.fillRect(barX, barY, healthBarWidth, 8);
+    
+                g2d.setColor(Color.WHITE);
+                g2d.drawRect(barX, barY, maxHealthBarWidth, 8);
+            }
         }
     }
 
     public boolean isHit(Bullet bullet) {
         Rectangle enemyRect = new Rectangle(x, y, enemyType.getEnemyWidth(), enemyType.getEnemyHeight());
         Rectangle bulletRect = new Rectangle(bullet.getBulletX(), bullet.getBulletY(), bullet.getBulletWidth(), bullet.getBulletHeight());
-        
-        return enemyRect.intersects(bulletRect);
+    
+        boolean hit = enemyRect.intersects(bulletRect);
+        if (hit) showHealthBar = true;
+    
+        return hit;
     }
+    
     
 
     public void setEnemyHealth(int damage) {
