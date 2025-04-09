@@ -15,6 +15,7 @@ import Enemy.Enemy;
 //import Enemy.EnemyAbs;
 import Enemy.EnemyFactory;
 
+import java.awt.image.BufferedImage;
 
 
 public class Frame extends JPanel implements ActionListener {
@@ -63,6 +64,15 @@ public class Frame extends JPanel implements ActionListener {
     int playerX;
     int playerY;
 
+    
+    // utk explosion
+    private ArrayList<Explosion> explosions = new ArrayList<>();
+    private ArrayList<Explosion> explosionsBase = new ArrayList<>();
+    private BufferedImage[] explosionFrames;
+    private BufferedImage[] explosionBase;
+
+    
+
     Frame() {
         width = columns * tileSize;
         height = rows * tileSize;
@@ -94,6 +104,10 @@ public class Frame extends JPanel implements ActionListener {
 
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
+
+        // explosion
+        explosionFrames = loadExplosionFrames();
+        explosionBase = loadExplosionBase();
 
 
         enemySpawnTimer = new Timer(enemySpawnInterval, new ActionListener() {
@@ -149,21 +163,13 @@ public class Frame extends JPanel implements ActionListener {
         pauseButton.setVisible(true);
 
         pauseButton.addActionListener(e -> {
-            gameLoop.stop();
-            enemySpawnTimer.stop();
-            blockSpawnTimer.stop();
-
-            Pause pauseFrame = new Pause(() -> {
-                
-                gameLoop.start();
-                enemySpawnTimer.start();
-                blockSpawnTimer.start();
-
-                requestFocusInWindow();
-            });
-            
-            
+            togglePause();
+            leftPressed = false;
+            rightPressed = false;
+            spacePressed = false;
         });
+
+        
 
         
 
@@ -208,6 +214,7 @@ public class Frame extends JPanel implements ActionListener {
     checkCollisionsTank();
     checkLose();
     checkHighScore();
+    checkPosition();
     
 
     repaint();
@@ -219,17 +226,23 @@ public class Frame extends JPanel implements ActionListener {
     
 
     public void checkPosition(){
-        for(Enemy enemy : enemies){
-            if(enemy.getEnemyY() > 768){
-                enemies.remove(enemy);
+        for (int i = enemies.size() - 1; i >= 0; i--) {
+            Enemy enemy = enemies.get(i);
+            if (enemy.getEnemyY() > 660) {
+                enemies.remove(i);
+                Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
+                explosionsBase.add(explosion); 
             }
         }
-        for(Bullet bullet : bullets){
-            if(bullet.getBulletY() < 0){
-                bullets.remove(bullet);
+
+        for (int i = bullets.size() - 1; i >= 0; i--) {
+            Bullet bullet = bullets.get(i);
+            if (bullet.getBulletY() < 0) {
+                bullets.remove(i);
             }
         }
     }
+
 
     private void adjustEnemySpawnRate() {
         int newInterval = 5000 - (score / 50) * 50; 
@@ -253,8 +266,19 @@ public class Frame extends JPanel implements ActionListener {
     
             isPaused = true;
     
-            pausePanel = new Pause(() -> {
-                togglePause(); // Kalau klik tombol resume
+            pausePanel = new Pause(new Pause.PauseListener() {
+                @Override
+                public void onResume() {
+                    togglePause();
+                    requestFocusInWindow();
+                }
+    
+                @Override
+                public void onReplay() {
+                    resetGame();
+                    togglePause();
+                    requestFocusInWindow();
+                }
             });
         } else {
             gameLoop.start();
@@ -266,8 +290,11 @@ public class Frame extends JPanel implements ActionListener {
             if (pausePanel != null) {
                 pausePanel.pauseFrame.dispose();
             }
+    
+            requestFocusInWindow();
         }
     }
+    
     
 
 
@@ -347,6 +374,11 @@ public class Frame extends JPanel implements ActionListener {
                     enemy.setEnemyHealth(bullet.getBulletDamage());
                     
                     if(enemy.getEnemyHealth() <= 0){
+                        // explosion
+                        Explosion explosion = new Explosion(enemy.getEnemyX() - 50, enemy.getEnemyY() - 40,200, 200, explosionFrames);
+                        explosions.add(explosion); 
+
+                        //
                         enemies.remove(j);
                         score += 10;
                         adjustEnemySpawnRate();
@@ -430,6 +462,25 @@ public class Frame extends JPanel implements ActionListener {
             bullet.draw(g);
         }
 
+        // explosion
+        for (int i = 0; i < explosions.size(); i++) {
+            Explosion exp = explosions.get(i);
+            exp.draw(g);
+            if (exp.isFinished()) {
+                explosions.remove(i);
+                i--; 
+            }
+        }
+
+        for (int i = 0; i < explosionsBase.size(); i++) {
+            Explosion exp = explosionsBase.get(i);
+            exp.draw(g);
+            if (exp.isFinished()) {
+                explosionsBase.remove(i);
+                i--; 
+            }
+        }
+
         int barWidth = 380;
         int barHeight = 20;
         int barX = (512 - barWidth) / 2;
@@ -488,5 +539,36 @@ public class Frame extends JPanel implements ActionListener {
     public int getScore() {
         return score;
     }
+
+    // utk explosion
+
+    private BufferedImage[] loadExplosionFrames() {
+        BufferedImage[] frames = new BufferedImage[10];
+        
+        try {
+            for (int i = 1; i < 11; i++) {
+                frames[i-1] = javax.imageio.ImageIO.read(new File("assets/PNG/Explosion_1/Explosion_" + (i) + ".png"));
+            }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return frames;
+        }
+
+        private BufferedImage[] loadExplosionBase() {
+            BufferedImage[] frames = new BufferedImage[10];
+            
+            try {
+                for (int i = 1; i < 11; i++) {
+                    frames[i-1] = javax.imageio.ImageIO.read(new File("assets/PNG/Explosion_3/Explosion_" + (i) + ".png"));
+                }
+            
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+                return frames;
+            }
+
 
 }

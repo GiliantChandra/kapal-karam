@@ -34,12 +34,12 @@ public class Pause extends JPanel {
 
         JButton quitButton = menu.createImageButton(
             "assets/PNG/Buttons/BTNs/Close_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Close_BTN.png", 75, 75
+            "assets/PNG/Buttons/BTNs_Active/Replay_BTN.png", 75, 75
         );
 
-        JButton infoButton = menu.createImageButton(
-            "assets/PNG/Buttons/BTNs/Info_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Info_BTN.png", 75, 75
+        JButton replayButton = menu.createImageButton(
+            "assets/PNG/Buttons/BTNs/Replay_BTN.png",
+            "assets/PNG/Buttons/BTNs_Active/Replay_BTN.png", 75, 75
         );
 
         playAgainButton.addActionListener(e -> {
@@ -50,9 +50,17 @@ public class Pause extends JPanel {
 
         quitButton.addActionListener(e -> System.exit(0));
 
+        replayButton.addActionListener(e -> {
+            pauseFrame.dispose();
+            listener.onReplay();
+
+        });
+
+
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
-        buttonPanel.add(infoButton);
+        buttonPanel.add(replayButton);
         buttonPanel.add(playAgainButton);
         buttonPanel.add(quitButton);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -63,6 +71,7 @@ public class Pause extends JPanel {
 
     public interface PauseListener {
         void onResume();
+        void onReplay();
     }
 
     @Override

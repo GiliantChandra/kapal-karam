@@ -26,9 +26,9 @@ public class startPanel extends JPanel{
 
         //title
         ImageIcon title = new ImageIcon("assets/PNG/Main_Menu/Header.png");
-        Image scaledTitle = title.getImage().getScaledInstance(300, 80, Image.SCALE_SMOOTH);
+        Image scaledTitle = title.getImage().getScaledInstance(400, 70, Image.SCALE_SMOOTH);
         JLabel titleLabel = new JLabel(new ImageIcon(scaledTitle));
-        titleLabel.setBounds(106, 110, 300, 80);
+        titleLabel.setBounds(27, 110, 450, 70);
         bgLabel.add(titleLabel);
 
         //start
