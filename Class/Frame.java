@@ -24,6 +24,8 @@ public class Frame extends JPanel implements ActionListener {
     private int width;
     private int height;
     private static int highscore = 0;
+    private int enemySpawnInterval = 5000; 
+
 
     private Image backgroundImage; 
     private String[] latar = {"assets/PNG/Space Background (2).png", "assets/PNG/Main_UI/BG.png"};
@@ -94,13 +96,15 @@ public class Frame extends JPanel implements ActionListener {
         gameLoop.start();
 
 
-        enemySpawnTimer = new Timer(500, new ActionListener() {
+        enemySpawnTimer = new Timer(enemySpawnInterval, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 spawnEnemy();
+                System.out.println("Spawning enemy, with interval : " + enemySpawnInterval);
             }
         });
         enemySpawnTimer.start();
+        spawnEnemy();
 
 
         blockSpawnTimer = new Timer(10000, new ActionListener(){
@@ -204,6 +208,7 @@ public class Frame extends JPanel implements ActionListener {
     checkCollisionsTank();
     checkLose();
     checkHighScore();
+    
 
     repaint();
 }
@@ -225,6 +230,19 @@ public class Frame extends JPanel implements ActionListener {
             }
         }
     }
+
+    private void adjustEnemySpawnRate() {
+        int newInterval = 5000 - (score / 50) * 50; 
+        if (newInterval < 100) {
+            newInterval = 100; 
+        }
+    
+        if (newInterval != enemySpawnInterval) {
+            enemySpawnInterval = newInterval;
+            enemySpawnTimer.setDelay(enemySpawnInterval);
+        }
+    }
+    
     
 
     public void togglePause() {
@@ -331,6 +349,7 @@ public class Frame extends JPanel implements ActionListener {
                     if(enemy.getEnemyHealth() <= 0){
                         enemies.remove(j);
                         score += 10;
+                        adjustEnemySpawnRate();
                     }
                     break;
                 }
