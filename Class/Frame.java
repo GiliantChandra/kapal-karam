@@ -41,9 +41,6 @@ public class Frame extends JPanel implements ActionListener {
     
     Timer gameLoop;
     Timer enemySpawnTimer;
-    Timer enemyMoveTimer;
-    Timer BulletTimer;
-    Timer BlockTimer;
     Timer blockSpawnTimer;
     // JFrame frame = new JFrame("Ya main last war lah !!");
 
@@ -81,9 +78,7 @@ public class Frame extends JPanel implements ActionListener {
         tanks.setBounds(playerX, playerY - 8, 1200, 84);
         add(tanks);
 
-        gameLoop = new Timer(1000 / 60, this);
-        gameLoop.start();
-
+        
         // audio
         String audioPath = System.getProperty("user.dir") + "/assets/music/BGM.WAV";
         System.out.println("Loading audio from: " + audioPath); // Debug
@@ -95,6 +90,10 @@ public class Frame extends JPanel implements ActionListener {
         //audio play
         audioManager.play("background", true);
 
+        gameLoop = new Timer(1000 / 60, this);
+        gameLoop.start();
+
+
         enemySpawnTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,36 +102,6 @@ public class Frame extends JPanel implements ActionListener {
         });
         enemySpawnTimer.start();
 
-
-        enemyMoveTimer = new Timer(60, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                move();
-            }
-        });
-        enemyMoveTimer.start();
-
-        BulletTimer = new Timer(60, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (Bullet b : bullets) {
-                    b.move();
-                }
-                
-            }
-        });
-        BulletTimer.start();
-
-        BlockTimer = new Timer(50, new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                for(BlockMath block : blockMath){
-                    block.move();
-                }
-                
-            }
-        });
-        BlockTimer.start();
 
         blockSpawnTimer = new Timer(10000, new ActionListener(){
             @Override
@@ -178,18 +147,12 @@ public class Frame extends JPanel implements ActionListener {
         pauseButton.addActionListener(e -> {
             gameLoop.stop();
             enemySpawnTimer.stop();
-            enemyMoveTimer.stop();
-            BulletTimer.stop();
-            BlockTimer.stop();
             blockSpawnTimer.stop();
 
             Pause pauseFrame = new Pause(() -> {
                 
                 gameLoop.start();
                 enemySpawnTimer.start();
-                enemyMoveTimer.start();
-                BulletTimer.start();
-                BlockTimer.start();
                 blockSpawnTimer.start();
 
                 requestFocusInWindow();
@@ -222,13 +185,32 @@ public class Frame extends JPanel implements ActionListener {
             spawnBullet();
         }
 
-        upgradeBullet();
-        checkCollisions();
-        checkCollisionsTank();
-        checkLose();
-        repaint();
-        checkHighScore();
-    }
+        upgradeBullet(); 
+
+        for (Bullet b : bullets) {
+            b.move();
+        }
+
+        for (Enemy enemy : enemies) {
+            enemy.move();
+        }
+
+        for (BlockMath block : blockMath) {
+            block.move();
+        }
+
+    // Deteksi tabrakan
+    checkCollisions();
+    checkCollisionsTank();
+    checkLose();
+    checkHighScore();
+
+    repaint();
+}
+
+
+   
+
     
 
     public void checkPosition(){
@@ -249,9 +231,6 @@ public class Frame extends JPanel implements ActionListener {
         if (!isPaused) {
             gameLoop.stop();
             enemySpawnTimer.stop();
-            enemyMoveTimer.stop();
-            BulletTimer.stop();
-            BlockTimer.stop();
             blockSpawnTimer.stop();
     
             isPaused = true;
@@ -262,9 +241,6 @@ public class Frame extends JPanel implements ActionListener {
         } else {
             gameLoop.start();
             enemySpawnTimer.start();
-            enemyMoveTimer.start();
-            BulletTimer.start();
-            BlockTimer.start();
             blockSpawnTimer.start();
     
             isPaused = false;
@@ -327,9 +303,6 @@ public class Frame extends JPanel implements ActionListener {
         if(tanks.getTankHealth() <= 0){
             gameLoop.stop();
             enemySpawnTimer.stop();
-            enemyMoveTimer.stop();
-            BulletTimer.stop();
-            BlockTimer.stop();
             blockSpawnTimer.stop();
 
             // new EndGame(this.score);
@@ -476,9 +449,6 @@ public class Frame extends JPanel implements ActionListener {
 
         gameLoop.start();
         enemySpawnTimer.start();
-        enemyMoveTimer.start();
-        BulletTimer.start();
-        BlockTimer.start();
         blockSpawnTimer.start();
 
         leftPressed = false;
