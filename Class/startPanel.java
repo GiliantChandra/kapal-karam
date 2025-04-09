@@ -35,9 +35,9 @@ public class startPanel extends JPanel{
         JButton startButton = menu.createImageButton(
             "assets/PNG/Main_Menu/Start_BTN.png",
             "assets/PNG/Main_Menu/Start_BTN_Hover.png",
-            200, 60
+            256, 178
         );
-        startButton.setBounds(156, 310, 200, 60);
+        startButton.setBounds(126, 280, 256, 158);
         startButton.addActionListener(e -> startGame());
         bgLabel.add(startButton);
 
