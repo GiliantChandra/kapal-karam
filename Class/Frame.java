@@ -230,6 +230,7 @@ public class Frame extends JPanel implements ActionListener {
             Enemy enemy = enemies.get(i);
             if (enemy.getEnemyY() > 660) {
                 enemies.remove(i);
+                tanks.damaged();
                 Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
                 explosionsBase.add(explosion); 
             }
