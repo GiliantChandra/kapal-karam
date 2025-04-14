@@ -25,7 +25,7 @@ public class Frame extends JPanel implements ActionListener {
     private int width;
     private int height;
     private static int highscore = 0;
-    private int enemySpawnInterval = 5000; 
+    private int enemySpawnInterval = 2500; 
 
 
     private Image backgroundImage; 
@@ -246,7 +246,7 @@ public class Frame extends JPanel implements ActionListener {
 
 
     private void adjustEnemySpawnRate() {
-        int newInterval = 5000 - (score / 50) * 50; 
+        int newInterval = 2500 - (score / 50) * 200; 
         if (newInterval < 100) {
             newInterval = 100; 
         }
