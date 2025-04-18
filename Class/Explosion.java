@@ -6,7 +6,7 @@ public class Explosion {
     private int x, y, width, height;
     private BufferedImage[] frames;
     private int currentFrame = 0;
-    private int frameDelay = 5;
+    private int frameDelay = 2;
     private int frameCounter = 0;
 
     public Explosion(int x, int y,int height, int width,  BufferedImage[] frames) {

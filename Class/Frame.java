@@ -521,6 +521,7 @@ public class Frame extends JPanel implements ActionListener {
         gameLoop.start();
         enemySpawnTimer.start();
         blockSpawnTimer.start();
+        this.enemySpawnInterval = 2500;
 
         leftPressed = false;
         rightPressed = false;
