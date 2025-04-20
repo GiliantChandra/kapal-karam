@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class BlockMath extends JPanel {
     Random rand = new Random();
+    private boolean isCollided = false;
     private String value;
     private int x, y;
     private int speed = 2; 
@@ -168,6 +169,19 @@ public class BlockMath extends JPanel {
                 tankX + tankWidth > blockX &&
                 tankY < blockY + blockHeight &&
                 tankY + tankHeight > blockY);
+        
+        
+    }
+
+    public boolean isCollided(){
+        return this.isCollided;
+    }
+
+    public void setCollided(boolean b){
+        this.isCollided = b;
     }
     
+    public int getBlockY(){
+        return this.y;
+    }
 }

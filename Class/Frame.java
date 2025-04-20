@@ -242,6 +242,13 @@ public class Frame extends JPanel implements ActionListener {
                 bullets.remove(i);
             }
         }
+
+        for(int i = 0 ; i<blockMath.size(); i++){
+            BlockMath block = blockMath.get(i);
+            if(block.getBlockY() > 768){
+                blockMath.remove(i);
+            }
+        }
     }
 
 
@@ -388,10 +395,13 @@ public class Frame extends JPanel implements ActionListener {
                 }
             }
         }
+        
+
 
         for (int i = 0; i < blockMath.size(); i++) {
             BlockMath block = blockMath.get(i);
-            if (block.isHit(tanks)) {  
+            if (!block.isCollided() && block.isHit(tanks)) {  
+                block.setCollided(true);
                 switch(block.opr0){
                     case "+":
                         score += block.getValue(); 
@@ -408,13 +418,22 @@ public class Frame extends JPanel implements ActionListener {
                         }
                         break;
                 }
-                remove(block);
-                blockMath.remove(i);
+                for(int j = 0; j< blockMath.size(); j++){
+                    if(blockMath.get(j) != block){
+                        remove(blockMath.get(j));
+                        blockMath.remove(j);
+                    }
+                }
                 
+            
             }
+                
         }
-
+        
+        
     }
+
+    
 
     private void checkCollisionsTank(){
         for (int i = 0; i<enemies.size(); i++) {
