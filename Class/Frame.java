@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import java.util.Random;
-
+import java.util.logging.Level;
 
 import Bullet.Bullet;
 import Enemy.Enemy;
@@ -68,8 +68,12 @@ public class Frame extends JPanel implements ActionListener {
     // utk explosion
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private ArrayList<Explosion> explosionsBase = new ArrayList<>();
+    private ArrayList<Explosion> levelUp = new ArrayList<>();
+
     private BufferedImage[] explosionFrames;
     private BufferedImage[] explosionBase;
+    private BufferedImage[] LevelUp;
+
 
     
 
@@ -108,6 +112,7 @@ public class Frame extends JPanel implements ActionListener {
         // explosion
         explosionFrames = loadExplosionFrames();
         explosionBase = loadExplosionBase();
+        LevelUp = loadLevelUp();
 
 
         enemySpawnTimer = new Timer(enemySpawnInterval, new ActionListener() {
@@ -456,6 +461,8 @@ public class Frame extends JPanel implements ActionListener {
     
     public int upgradeBullet(){
         if(score > targetScore){
+            Explosion levelup = new Explosion(tanks.getX()-230, 430, 500, 500 ,LevelUp);
+            levelUp.add(levelup); 
             bullet.incrementIdxBullet();
             targetScore *= 2;
         }
@@ -497,6 +504,15 @@ public class Frame extends JPanel implements ActionListener {
             exp.draw(g);
             if (exp.isFinished()) {
                 explosionsBase.remove(i);
+                i--; 
+            }
+        }
+
+        for (int i = 0; i < levelUp.size(); i++) {
+            Explosion exp = levelUp.get(i);
+            exp.draw(g);
+            if (exp.isFinished()) {
+                levelUp.remove(i);
                 i--; 
             }
         }
@@ -577,7 +593,7 @@ public class Frame extends JPanel implements ActionListener {
             return frames;
         }
 
-        private BufferedImage[] loadExplosionBase() {
+    private BufferedImage[] loadExplosionBase() {
             BufferedImage[] frames = new BufferedImage[10];
             
             try {
@@ -590,6 +606,19 @@ public class Frame extends JPanel implements ActionListener {
             }
                 return frames;
             }
+
+    private BufferedImage[] loadLevelUp(){
+        BufferedImage[] frames = new BufferedImage[10];
+
+        try{
+            for(int i = 1; i<11; i++){
+                frames[i-1] = javax.imageio.ImageIO.read(new File("assets/PNG/Explosion_5/Explosion_" + (i) + ".png"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return frames;
+    }
 
 
 }
