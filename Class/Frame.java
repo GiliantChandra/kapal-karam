@@ -241,6 +241,7 @@ public class Frame extends JPanel implements ActionListener {
                 enemies.remove(i);
                 tanks.damaged();
                 Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
+                SoundPlayer.playSound("assets/music/a-bomb-139689 (online-audio-converter.com).wav");  
                 explosionsBase.add(explosion); 
             }
         }
@@ -395,6 +396,7 @@ public class Frame extends JPanel implements ActionListener {
                         // explosion
                         Explosion explosion = new Explosion(enemy.getEnemyX() - 50, enemy.getEnemyY() - 40,200, 200, explosionFrames);
                         explosions.add(explosion); 
+                        SoundPlayer.playSound("assets/music/explosion-312361 (online-audio-converter.com).wav");  
 
                         //
                         enemies.remove(j);
