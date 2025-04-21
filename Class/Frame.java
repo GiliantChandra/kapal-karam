@@ -17,6 +17,10 @@ import Enemy.EnemyFactory;
 
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+
 
 public class Frame extends JPanel implements ActionListener {
     private int tileSize = 32;
@@ -334,6 +338,7 @@ public class Frame extends JPanel implements ActionListener {
         long now = System.currentTimeMillis();
         if (now - lastShotTime >= shootingCooldown) {
             Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY() - 22);
+            SoundPlayer.playSound("assets/music/laser-45816 (online-audio-converter.com).wav");
             newBullet.setidxBullet(upgradeBullet());
             bullets.add(newBullet);
             lastShotTime = now;
@@ -618,6 +623,20 @@ public class Frame extends JPanel implements ActionListener {
             e.printStackTrace();
         }
         return frames;
+    }
+
+    public class SoundPlayer {
+        public static void playSound(String filepath) {
+            try {
+                File file = new File(filepath);
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
