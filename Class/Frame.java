@@ -241,7 +241,15 @@ public class Frame extends JPanel implements ActionListener {
                 enemies.remove(i);
                 tanks.damaged();
                 Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
-                SoundPlayer.playSound("assets/music/a-bomb-139689 (online-audio-converter.com).wav");  
+                
+                String audioPath = "assets/music/a-bomb-139689 (online-audio-converter.com).wav";
+
+                //load audio
+                audioManager.loadSound("explode", new File(audioPath).getAbsolutePath());
+    
+
+                //audio play
+                audioManager.play("explode", false);
                 explosionsBase.add(explosion); 
             }
         }
@@ -339,7 +347,16 @@ public class Frame extends JPanel implements ActionListener {
         long now = System.currentTimeMillis();
         if (now - lastShotTime >= shootingCooldown) {
             Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY() - 22);
-            SoundPlayer.playSound("assets/music/laser-45816 (online-audio-converter.com).wav");
+            
+            String audioPath = "assets/music/laser-45816 (online-audio-converter.com).wav";
+
+            //load audio
+            audioManager.loadSound("shoot", new File(audioPath).getAbsolutePath());
+    
+
+            //audio play
+            audioManager.play("shoot", false);
+
             newBullet.setidxBullet(upgradeBullet());
             bullets.add(newBullet);
             lastShotTime = now;
@@ -396,7 +413,15 @@ public class Frame extends JPanel implements ActionListener {
                         // explosion
                         Explosion explosion = new Explosion(enemy.getEnemyX() - 50, enemy.getEnemyY() - 40,200, 200, explosionFrames);
                         explosions.add(explosion); 
-                        SoundPlayer.playSound("assets/music/explosion-312361 (online-audio-converter.com).wav");  
+                          
+                        String audioPath = "assets/music/explosion-312361 (online-audio-converter.com).wav";
+
+                        //load audio
+                        audioManager.loadSound("enemydead", new File(audioPath).getAbsolutePath());
+    
+
+                        //audio play
+                        audioManager.play("enemydead", false);
 
                         //
                         enemies.remove(j);
@@ -469,7 +494,15 @@ public class Frame extends JPanel implements ActionListener {
     public int upgradeBullet(){
         if(score > targetScore){
             Explosion levelup = new Explosion(tanks.getX()-230, 430, 500, 500 ,LevelUp);
-            SoundPlayer.playSound("assets/music/electric-impact-37128 (online-audio-converter.com).wav");
+            String audioPath = "assets/music/electric-impact-37128 (online-audio-converter.com).wav";
+
+            //load audio
+            audioManager.loadSound("lepelup", new File(audioPath).getAbsolutePath());
+    
+
+            //audio play
+            audioManager.play("lepelup", false);
+
             levelUp.add(levelup); 
             bullet.incrementIdxBullet();
             targetScore *= 2;
@@ -628,19 +661,7 @@ public class Frame extends JPanel implements ActionListener {
         return frames;
     }
 
-    public class SoundPlayer {
-        public static void playSound(String filepath) {
-            try {
-                File file = new File(filepath);
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioIn);
-                clip.start();
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    
 
 
 }
