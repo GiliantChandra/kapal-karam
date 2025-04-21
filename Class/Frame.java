@@ -91,6 +91,9 @@ public class Frame extends JPanel implements ActionListener {
        
         backgroundImage = new ImageIcon(latar[0]).getImage();
 
+        audioManager.loadSound("enemydead", new File("assets/music/explosion-312361 (online-audio-converter.com).wav").getAbsolutePath());
+        audioManager.loadSound("explode", new File("assets/music/a-bomb-139689 (online-audio-converter.com).wav").getAbsolutePath());
+        audioManager.loadSound("lepelup", new File("assets/music/electric-impact-37128 (online-audio-converter.com).wav").getAbsolutePath());
         
         setLayout(null); 
 
@@ -241,11 +244,7 @@ public class Frame extends JPanel implements ActionListener {
                 enemies.remove(i);
                 tanks.damaged();
                 Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
-                
-                String audioPath = "assets/music/a-bomb-139689 (online-audio-converter.com).wav";
 
-                //load audio
-                audioManager.loadSound("explode", new File(audioPath).getAbsolutePath());
     
 
                 //audio play
@@ -413,12 +412,7 @@ public class Frame extends JPanel implements ActionListener {
                         // explosion
                         Explosion explosion = new Explosion(enemy.getEnemyX() - 50, enemy.getEnemyY() - 40,200, 200, explosionFrames);
                         explosions.add(explosion); 
-                          
-                        String audioPath = "assets/music/explosion-312361 (online-audio-converter.com).wav";
-
-                        //load audio
-                        audioManager.loadSound("enemydead", new File(audioPath).getAbsolutePath());
-    
+                
 
                         //audio play
                         audioManager.play("enemydead", false);
@@ -494,12 +488,7 @@ public class Frame extends JPanel implements ActionListener {
     public int upgradeBullet(){
         if(score > targetScore){
             Explosion levelup = new Explosion(tanks.getX()-230, 430, 500, 500 ,LevelUp);
-            String audioPath = "assets/music/electric-impact-37128 (online-audio-converter.com).wav";
-
-            //load audio
-            audioManager.loadSound("lepelup", new File(audioPath).getAbsolutePath());
-    
-
+            
             //audio play
             audioManager.play("lepelup", false);
 
