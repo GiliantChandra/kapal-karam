@@ -467,6 +467,7 @@ public class Frame extends JPanel implements ActionListener {
     public int upgradeBullet(){
         if(score > targetScore){
             Explosion levelup = new Explosion(tanks.getX()-230, 430, 500, 500 ,LevelUp);
+            SoundPlayer.playSound("assets/music/electric-impact-37128 (online-audio-converter.com).wav");
             levelUp.add(levelup); 
             bullet.incrementIdxBullet();
             targetScore *= 2;
