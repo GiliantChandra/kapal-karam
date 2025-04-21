@@ -21,7 +21,6 @@ public class audioManager {
 
     public static void loadSound (String name, String path) {
         try {
-        System.out.println("Attempting to load: " + path); // Debug
         
         File audioFile = new File(path);
         if (!audioFile.exists()) {
@@ -33,7 +32,7 @@ public class audioManager {
             clip.open(audioIn);
             sounds.add(new audioClip(name, clip));
             
-            System.out.println("Successfully loaded: " + name);
+            
         } catch(Exception e) {
             System.err.println("ERROR loading sound '" + name + "'");
             e.printStackTrace();
