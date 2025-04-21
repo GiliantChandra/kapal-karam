@@ -100,7 +100,7 @@ public class Frame extends JPanel implements ActionListener {
 
         
         // audio
-        String audioPath = System.getProperty("user.dir") + "/assets/music/BGM.WAV";
+        String audioPath = "assets/music/video-game-tank-metal-220562 (online-audio-converter.com).wav";
         System.out.println("Loading audio from: " + audioPath); // Debug
 
         //load audio
