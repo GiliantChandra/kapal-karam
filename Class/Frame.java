@@ -368,9 +368,7 @@ public class Frame extends JPanel implements ActionListener {
         blockMath.add(newBlockMathRight);
         add(newBlockMathLeft);
         add(newBlockMathRight);
-        newBlockMathLeft.setBounds(0, 0 , 250, 100);
-        newBlockMathRight.setBounds(0, 0 , 256, 100);
-
+        
 
     }
 

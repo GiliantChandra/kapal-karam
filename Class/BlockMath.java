@@ -9,7 +9,7 @@ public class BlockMath extends JPanel {
     private int x, y;
     private int speed = 2; 
     private int WIDTH = 256;
-    private int HEIGHT = 64;
+    private int HEIGHT = 100;
     private String operator[] = {"+" , "-", "/", "*"};
     int a, b, c;
     String opr0 = operator[rand.nextInt(2)];
