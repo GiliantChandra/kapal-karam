@@ -83,8 +83,8 @@ public class Frame extends JPanel implements ActionListener {
         width = columns * tileSize;
         height = rows * tileSize;
 
-        playerX = tileSize * columns / 2 - 32; 
-        playerY = height - 110; 
+        playerX = tileSize * columns / 2 - 40; 
+        playerY = height - 118; 
 
        
         backgroundImage = new ImageIcon(latar[0]).getImage();
@@ -96,7 +96,7 @@ public class Frame extends JPanel implements ActionListener {
         setLayout(null); 
 
         
-        tanks.setBounds(playerX, playerY - 8, 1200, 84);
+        tanks.setBounds(playerX, playerY, 40, 64);
         add(tanks);
 
         

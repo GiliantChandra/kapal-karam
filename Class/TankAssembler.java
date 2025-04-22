@@ -12,8 +12,8 @@ public class TankAssembler extends JPanel {
     private int health = 1000;
     private BufferedImage base, turret, track;
     private int frameWidth = 512;
-    int tankX = 224;
-    int tankY = 660;
+    int tankX = 216;
+    int tankY = 650;
     private int tankWidth = 40;
     private int tankHeight = 64;
     private int speed = 5;
@@ -113,14 +113,14 @@ public class TankAssembler extends JPanel {
     public void moveLeft() {
         if (tankX - speed >= 0) { 
             tankX -= speed;
-            setLocation(tankX, tankY - 10);
+            setLocation(tankX, tankY);
         }
     }
 
     public void moveRight() {
         if (tankX + speed + 64 <= frameWidth) { 
             tankX += speed;
-            setLocation(tankX, tankY - 10);
+            setLocation(tankX, tankY);
         }
     }
 
@@ -134,7 +134,7 @@ public class TankAssembler extends JPanel {
     public void resetTank() {
         this.health = 1000;
         this.tankX = 224;
-        this.tankY = 660;
+        this.tankY = 650;
 
         repaint();
     }

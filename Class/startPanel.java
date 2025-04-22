@@ -82,7 +82,7 @@ public class startPanel extends JPanel{
 
     private void startGame() {
         gamePanel = new Frame();
-        gamePanel.setPreferredSize(new Dimension(512, 753));
+        gamePanel.setPreferredSize(new Dimension(512, 768));
         frame.setContentPane(gamePanel);
         frame.pack(); // resize frame ikutin game panel
         frame.revalidate();
