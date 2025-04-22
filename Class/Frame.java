@@ -29,6 +29,7 @@ public class Frame extends JPanel implements ActionListener {
     private int width;
     private int height;
     private static int highscore = 0;
+    
     private int enemySpawnInterval = 2500; 
 
 
@@ -569,6 +570,10 @@ public class Frame extends JPanel implements ActionListener {
     // validasi game over.
     // reset game
     public void resetGame() {
+        enemySpawnTimer.stop();
+        enemySpawnInterval = 2500;
+        enemySpawnTimer.setDelay(enemySpawnInterval);
+        enemySpawnTimer.setInitialDelay(enemySpawnInterval);
         score = 0;
         targetScore = 20;
 
@@ -579,6 +584,7 @@ public class Frame extends JPanel implements ActionListener {
         for (BlockMath block : blockMath) {
             remove(block);
         }
+        
         enemies.clear();
         bullets.clear();
         blockMath.clear();
