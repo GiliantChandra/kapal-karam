@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import java.util.Random;
-import java.util.logging.Level;
+
 
 import Bullet.Bullet;
 import Enemy.Enemy;
@@ -17,9 +17,6 @@ import Enemy.EnemyFactory;
 
 import java.awt.image.BufferedImage;
 
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 
 
 public class Frame extends JPanel implements ActionListener {

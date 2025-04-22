@@ -1,8 +1,7 @@
 import javax.sound.sampled.*;
 
-import java.applet.AudioClip;
+
 import java.io.File;
-import java.io.InputStream;
 import java.util.*;
 
 public class audioManager {

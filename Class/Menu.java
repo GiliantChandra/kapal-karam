@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
 public class Menu extends JPanel{
     public JButton createImageButton(String normalImagePath, String hoverImagePath, int width, int height) {
     // Load gambar normal dan hover
