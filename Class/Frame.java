@@ -241,7 +241,7 @@ public class Frame extends JPanel implements ActionListener {
             if (enemy.getEnemyY() > 660) {
                 enemies.remove(i);
                 tanks.damaged();
-                Explosion explosion = new Explosion(enemy.getEnemyX() - 275, 400, 400, 600 ,explosionBase);
+                Explosion explosion = new Explosion(enemy.getEnemyX() + (enemy.getEnemyWidth()/2) - 300, 400, 400, 600 ,explosionBase);
 
     
 
@@ -321,9 +321,7 @@ public class Frame extends JPanel implements ActionListener {
     
 
 
-    private void spawnEnemy() {
-        int randomX = random.nextInt(width-64);
-        int randomY = (random.nextInt(50)) - 300; 
+    private void spawnEnemy() { 
         Enemy newEnemy = EnemyFactory.createEnemy();
         enemies.add(newEnemy);
        
@@ -343,7 +341,7 @@ public class Frame extends JPanel implements ActionListener {
     public void spawnBullet() {
         long now = System.currentTimeMillis();
         if (now - lastShotTime >= shootingCooldown) {
-            Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY() - 22);
+            Bullet newBullet = new Bullet(tanks.getTankX(), tanks.getTankY());
             
             String audioPath = "assets/music/laser-45816 (online-audio-converter.com).wav";
 
@@ -406,7 +404,16 @@ public class Frame extends JPanel implements ActionListener {
                     
                     if(enemy.getEnemyHealth() <= 0){
                         // explosion
-                        Explosion explosion = new Explosion(enemy.getEnemyX() - 50, enemy.getEnemyY() - 40,200, 200, explosionFrames);
+                        int explosionWidth = 200;
+                        int explosionHeight = 200;
+
+                        int centerX = enemy.getEnemyX() + (enemy.getEnemyWidth() / 2);
+                        int centerY = enemy.getEnemyY() + (enemy.getEnemyHeight() / 2);
+
+                        int explosionX = centerX - (explosionWidth / 2);
+                        int explosionY = centerY - (explosionHeight / 2);
+
+                        Explosion explosion = new Explosion(explosionX, explosionY, explosionWidth, explosionHeight, explosionFrames);
                         explosions.add(explosion); 
                 
 
@@ -483,7 +490,7 @@ public class Frame extends JPanel implements ActionListener {
     
     public int upgradeBullet(){
         if(score > targetScore){
-            Explosion levelup = new Explosion(tanks.getX()-230, 430, 500, 500 ,LevelUp);
+            Explosion levelup = new Explosion(tanks.getX()+20-250, 650+32-250, 500, 500 ,LevelUp);
             
             //audio play
             audioManager.play("lepelup", false);
@@ -543,7 +550,7 @@ public class Frame extends JPanel implements ActionListener {
             }
         }
 
-        int barWidth = 380;
+        int barWidth = 384;
         int barHeight = 20;
         int barX = (512 - barWidth) / 2;
         int barY = 728;

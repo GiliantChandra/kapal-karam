@@ -38,17 +38,19 @@ public class Enemy {
             g2d.drawImage(enemyImg, x, y, enemyType.getEnemyWidth(), enemyType.getEnemyHeight(), null);
     
             if (showHealthBar) {
-                int maxHealthBarWidth = 50;
+                int height;
+                int maxHealthBarWidth = enemyType.getEnemyWidth() - 20;
                 int healthBarWidth = (int) ((double) health / enemyType.getEnemyHealth() * maxHealthBarWidth);
+                height = (enemyType.getEnemyWidth() >= 64) ? 10 : 8;
     
                 int barX = x + 10;
                 int barY = y - 10;
     
                 g2d.setColor(Color.RED);
-                g2d.fillRect(barX, barY, healthBarWidth, 8);
+                g2d.fillRect(barX, barY, healthBarWidth, height);
     
                 g2d.setColor(Color.WHITE);
-                g2d.drawRect(barX, barY, maxHealthBarWidth, 8);
+                g2d.drawRect(barX, barY, maxHealthBarWidth, height);
             }
         }
     }

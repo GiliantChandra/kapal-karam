@@ -6,7 +6,7 @@ public class EnemyFactory {
 
     public static Enemy createEnemy() {
         int x = rand.nextInt(512 - 64); 
-        int y = 0;
+        int y = -64;
 
         EnemyAbs[] enemyTypes = {
             new Rocket(),
