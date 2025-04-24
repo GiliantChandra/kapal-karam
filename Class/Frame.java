@@ -269,8 +269,8 @@ public class Frame extends JPanel implements ActionListener {
 
     private void adjustEnemySpawnRate() {
         int newInterval = 2500 - (score / 50) * 200; 
-        if (newInterval < 100) {
-            newInterval = 100; 
+        if (newInterval < 500) {
+            newInterval = 500; 
         }
     
         if (newInterval != enemySpawnInterval) {
