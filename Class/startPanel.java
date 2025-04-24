@@ -25,10 +25,11 @@ public class startPanel extends JPanel{
         add(bgLabel);
 
         //title
-        ImageIcon title = new ImageIcon("assets/PNG/Main_Menu/Header.png");
-        Image scaledTitle = title.getImage().getScaledInstance(400, 70, Image.SCALE_SMOOTH);
+        ImageIcon title = new ImageIcon("assets/PNG/Main_Menu/Kapal-karam.png");
+        Image scaledTitle = title.getImage().getScaledInstance(512, 512, Image.SCALE_SMOOTH);
         JLabel titleLabel = new JLabel(new ImageIcon(scaledTitle));
-        titleLabel.setBounds(27, 110, 450, 70);
+        titleLabel.setBounds(
+                0, -100, 512, 512);
         bgLabel.add(titleLabel);
 
         //start
