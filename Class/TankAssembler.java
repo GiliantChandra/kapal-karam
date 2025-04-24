@@ -17,6 +17,7 @@ public class TankAssembler extends JPanel {
     private int tankWidth = 40;
     private int tankHeight = 64;
     private int speed = 10;
+    private int idx = 0;
 
     String[] BasePath = {"assets/PNG/Hulls_Color_D/Hull_08.png", 
                          "assets/PNG/Hulls_Color_D/Hull_07.png",
@@ -49,14 +50,19 @@ public class TankAssembler extends JPanel {
     public TankAssembler() {
         setPreferredSize(new Dimension(tankWidth, tankHeight));
         setOpaque(false);
+        loadTankImages();
+    }
+
+    private void loadTankImages() {
         try {
-            base = ImageIO.read(new File(BasePath[0]));  
-            turret = ImageIO.read(new File(turretPath[1]));
-            track = ImageIO.read(new File(trackPath[0]));
+            base = ImageIO.read(new File(BasePath[idx]));
+            turret = ImageIO.read(new File(turretPath[idx]));
+            track = ImageIO.read(new File(trackPath[idx]));
         } catch (Exception e) {
             System.out.println("Error loading images: " + e.getMessage());
         }
     }
+    
 
     public int getTankHealth(){
         return this.health;
@@ -78,6 +84,19 @@ public class TankAssembler extends JPanel {
     public void damaged(){
         this.health -= 100;
         repaint();
+    }
+
+    public void setIdx(){
+        this.idx++;
+        if (idx >= BasePath.length) {
+            idx = BasePath.length - 1; 
+        }
+        loadTankImages();  
+              
+    }
+
+    public int getIdx(){
+        return this.idx;
     }
 
     @Override
@@ -134,7 +153,8 @@ public class TankAssembler extends JPanel {
     public void resetTank() {
         this.health = 1000;
         this.tankX = 224;
-        this.tankY = 650;
+        this.idx = 0;
+        loadTankImages();
 
         repaint();
     }

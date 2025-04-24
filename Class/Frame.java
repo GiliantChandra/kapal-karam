@@ -498,6 +498,9 @@ public class Frame extends JPanel implements ActionListener {
             levelUp.add(levelup); 
             bullet.incrementIdxBullet();
             targetScore *= 2;
+
+            tanks.setIdx();
+            
         }
         return bullet.getidxBullet();
     }
@@ -600,7 +603,7 @@ public class Frame extends JPanel implements ActionListener {
         rightPressed = false;
         spacePressed = false;
 
-        tanks.setBounds(playerX, playerY - 8, 1200, 84);
+        tanks.setBounds(playerX, playerY, 1200, 84);
 
     
     }
