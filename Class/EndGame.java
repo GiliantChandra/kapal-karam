@@ -10,6 +10,7 @@ public class EndGame extends JPanel {
     private BufferedImage Menu, Score, Record, YouLose;
     private JFrame gameOverFrame;
     private int score, highscore;
+    Menu menu = new Menu();
     
     
 
@@ -42,9 +43,9 @@ public class EndGame extends JPanel {
         
 
         // Buat tombol dengan gambar
-        JButton playAgainButton = createImageButton("assets/PNG/Buttons/BTNs/Play_BTN.png","assets/PNG/Buttons/BTNs_Active/Play_BTN.png", 75, 75);
-        JButton quitButton = createImageButton("assets/PNG/Buttons/BTNs/Close_BTN.png","assets/PNG/Buttons/BTNs_Active/Close_BTN.png", 75, 75);
-        JButton infoButton = createImageButton("assets/PNG/Buttons/BTNs/Info_BTN.png","assets/PNG/Buttons/BTNs_Active/Info_BTN.png", 75, 75);
+        JButton playAgainButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Play_BTN.png","assets/PNG/Buttons/BTNs_Active/Play_BTN.png", 75, 75);
+        JButton quitButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Close_BTN.png","assets/PNG/Buttons/BTNs_Active/Close_BTN.png", 75, 75);
+        JButton infoButton = menu.createImageButton("assets/PNG/Buttons/BTNs/Info_BTN.png","assets/PNG/Buttons/BTNs_Active/Info_BTN.png", 75, 75);
         
 
         // Tambahkan event listener
@@ -98,32 +99,6 @@ public class EndGame extends JPanel {
 
 
     
-    private JButton createImageButton(String normalImagePath, String hoverImagePath, int width, int height) {
-    // Load gambar normal dan hover
-    ImageIcon normalIcon = new ImageIcon(new ImageIcon(normalImagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
-    ImageIcon hoverIcon = new ImageIcon(new ImageIcon(hoverImagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
-
-    JButton button = new JButton(normalIcon);
-    button.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
-    button.setBorderPainted(false);
-    button.setContentAreaFilled(false);
-    button.setFocusPainted(false);
-    button.setOpaque(false);
-
-    // Tambahkan efek hover
-    button.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            button.setIcon(hoverIcon); // Ubah ikon saat hover
-        }
-
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            button.setIcon(normalIcon); // Kembalikan ikon normal saat tidak hover
-        }
-    });
-
-    return button;
-}
+    
 
 }

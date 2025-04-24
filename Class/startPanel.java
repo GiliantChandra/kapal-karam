@@ -93,15 +93,5 @@ public class startPanel extends JPanel{
         return gamePanel;
     }
 
-    private void styleButton(JButton button) {
-        button.setBorderPainted(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-    }
-
-    private ImageIcon scaleIcon(String path, int width, int height) {
-        ImageIcon icon = new ImageIcon(path);
-        Image scaledImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-    }
+    
 }
