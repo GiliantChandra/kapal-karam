@@ -12,8 +12,8 @@ public class TankAssembler extends JPanel {
     private int health = 1000;
     private BufferedImage base, turret, track;
     private int frameWidth = 512;
-    int tankX = 216;
-    int tankY = 650;
+    private int tankX = 216;
+    private int tankY = 650;
     private int tankWidth = 40;
     private int tankHeight = 64;
     private int speed = 10;

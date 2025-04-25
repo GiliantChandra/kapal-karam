@@ -53,7 +53,7 @@ public class Frame extends JPanel implements ActionListener {
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    Bullet bullet = new Bullet(tanks.tankX, tanks.tankY);
+    Bullet bullet = new Bullet(tanks.getTankX(), tanks.getTankY());
 
     BlockMath blockmath = new BlockMath(0, 0);
     private ArrayList<BlockMath> blockMath = new ArrayList<>();
