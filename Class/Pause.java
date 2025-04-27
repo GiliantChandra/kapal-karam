@@ -34,7 +34,7 @@ public class Pause extends JPanel {
 
         JButton quitButton = menu.createImageButton(
             "assets/PNG/Buttons/BTNs/Close_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Replay_BTN.png", 75, 75
+            "assets/PNG/Buttons/BTNs_Active/Close_BTN.png", 75, 75
         );
 
         JButton replayButton = menu.createImageButton(
