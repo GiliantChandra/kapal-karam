@@ -16,7 +16,7 @@ public class TankAssembler extends JPanel {
     private int tankY = 650;
     private int tankWidth = 40;
     private int tankHeight = 64;
-    private int speed = 10;
+    private int speed = 12;
     private int idx = 0;
 
     String[] BasePath = {"assets/PNG/Hulls_Color_D/Hull_08.png", 
@@ -143,6 +143,13 @@ public class TankAssembler extends JPanel {
         }
     }
 
+    public void setSpeedWhenBulletSpawn(){
+        this.speed = 6;
+    }
+    public void setpSpeedWhenNotBulletSpawn(){
+        this.speed = 12;
+    }
+
     public boolean isHit(Enemy enemy) {
         return tankX < enemy.getEnemyX() + enemy.getEnemyWidth() &&
            tankX + tankWidth > enemy.getEnemyX() &&
@@ -155,6 +162,7 @@ public class TankAssembler extends JPanel {
         this.tankX = 224;
         this.idx = 0;
         loadTankImages();
+        setpSpeedWhenNotBulletSpawn();
 
         repaint();
     }

@@ -203,6 +203,10 @@ public class Frame extends JPanel implements ActionListener {
         }
         if (spacePressed) {
             spawnBullet();
+            tanks.setSpeedWhenBulletSpawn();
+        }
+        else if(!spacePressed){
+            tanks.setpSpeedWhenNotBulletSpawn();
         }
 
         upgradeBullet(); 
