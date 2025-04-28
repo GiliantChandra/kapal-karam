@@ -42,17 +42,6 @@ public class startPanel extends JPanel{
         startButton.addActionListener(e -> startGame());
         bgLabel.add(startButton);
 
-        //setting
-        JButton settingButton = menu.createImageButton(
-            "assets/PNG/Main_Menu/Settings_BTN.png",
-            "assets/PNG/Buttons/BTNs_Active/Settings_BTN.png",
-            40, 40
-        );
-        settingButton.setBounds(452, 698, 40, 40);
-        settingButton.addActionListener(e -> {
-            System.out.println("Settings clicked....");
-        });
-        bgLabel.add(settingButton);
 
         // Exit 
         JButton exitButton = menu.createImageButton(
