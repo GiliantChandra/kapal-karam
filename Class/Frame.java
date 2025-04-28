@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import java.util.Random;
 
 
 import Bullet.Bullet;
@@ -39,8 +38,6 @@ public class Frame extends JPanel implements ActionListener {
 
     Menu menu = new Menu();
 
-    Random random = new Random();
-
     private int score = 0;
     int targetScore = 20;
     
@@ -55,7 +52,6 @@ public class Frame extends JPanel implements ActionListener {
     private ArrayList<Bullet> bullets = new ArrayList<>();
     Bullet bullet = new Bullet(tanks.getTankX(), tanks.getTankY());
 
-    BlockMath blockmath = new BlockMath(0, 0);
     private ArrayList<BlockMath> blockMath = new ArrayList<>();
 
     //for gerak sambil serang
