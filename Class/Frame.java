@@ -458,7 +458,7 @@ public class Frame extends JPanel implements ActionListener {
                         blockMath.remove(j);
                     }
                 }
-                
+                adjustEnemySpawnRate();
             
             }
                 
