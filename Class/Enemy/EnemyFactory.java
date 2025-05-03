@@ -5,7 +5,7 @@ public class EnemyFactory {
     private static Random rand = new Random();
 
     public static Enemy createEnemy() {
-        int x = rand.nextInt(512 - 64); 
+        int x = rand.nextInt(512 - 128); 
         int y = -64;
 
         EnemyAbs[] enemyTypes = {
